@@ -14,6 +14,7 @@ public class Pet {
 
     public String solve(Scanner in) {
         Queue<Score> scores = new PriorityQueue<>((s, s1) -> s1.total - s.total);
+
         for (int i = 0 ; i < 5 ; i++) {
             int total = Arrays.asList(in.nextLine().split(" "))
                     .stream()
