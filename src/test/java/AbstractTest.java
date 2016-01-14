@@ -1,5 +1,3 @@
-package se.svt.kattis;
-
 import org.junit.Assert;
 
 import java.io.BufferedReader;

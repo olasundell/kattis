@@ -1,5 +1,3 @@
-package se.svt.kattis;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +14,7 @@ public class SpeedLimit {
 
     public String solve(Scanner in) {
         List<Distance> distances = new ArrayList<>();
-        int n = 0;
+        int n;
 
         while ((n = in.nextInt()) != -1){
             int totalDistance = 0;
@@ -29,6 +27,7 @@ public class SpeedLimit {
             }
             distances.add(new Distance(totalDistance));
         }
+
         return distances.stream()
                 .map(Distance::toString)
                 .collect(Collectors.joining("\n"));

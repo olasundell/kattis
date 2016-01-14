@@ -1,5 +1,3 @@
-package se.svt.kattis;
-
 import org.junit.Test;
 
 import java.io.IOException;
@@ -7,15 +5,15 @@ import java.io.IOException;
 /**
  * TODO write documentation
  */
-public class SpeedLimitTest extends AbstractTest {
+public class OdditiesTest extends AbstractTest {
 
     @Test
     public void one() throws IOException {
-        runTest(1, new SpeedLimit()::solve);
+        runTest(1, new Oddities()::solve);
     }
 
     @Override
     protected String getDir() {
-        return "speedlimit/";
+        return "oddities/";
     }
 }

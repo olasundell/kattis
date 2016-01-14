@@ -1,5 +1,3 @@
-package se.svt.kattis;
-
 import java.util.Scanner;
 
 /**
