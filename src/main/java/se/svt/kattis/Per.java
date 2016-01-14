@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Per {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
+        System.out.println(new Per().solve(in));
     }
 
     public String solve(Scanner in) {
