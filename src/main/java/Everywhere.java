@@ -23,7 +23,7 @@ public class Everywhere {
             Set<String> cities = new HashSet<>();
 
             for (int j = 0; j < lines; j++) {
-                cities.add(in.nextLine());
+                cities.add(in.next());
             }
 
             numberOfCities.add(cities.size());
