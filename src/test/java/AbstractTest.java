@@ -14,7 +14,7 @@ import java.util.function.Function;
  * TODO write documentation
  */
 public abstract class AbstractTest {
-    protected final static String DIR = "/Users/olasundell/code/kattis/src/test/resources/";
+    protected final static String DIR = "src/test/resources/";
     protected abstract String getDir();
 
     protected void runTest(int i, Function<Scanner, String> function) throws IOException {
