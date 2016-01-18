@@ -24,14 +24,25 @@ public abstract class AbstractTest {
     }
 
     protected Scanner buildScanner(String s) throws FileNotFoundException {
-        return new Scanner(new File(DIR + getDir() + s));
+        return new Scanner(new File(DIR + getSafeDir() + s));
+    }
+
+    // TODO this could probably be slightly cleaner
+    protected String getSafeDir() {
+        String dir = getDir();
+
+        if (!dir.endsWith("/")) {
+            return dir + "/";
+        } else {
+            return dir;
+        }
     }
 
     protected String readFile(String fileName) throws IOException {
         List<String> solution = new ArrayList<>();
         String line;
 
-        final BufferedReader reader = new BufferedReader(new FileReader(DIR + getDir() + fileName));
+        final BufferedReader reader = new BufferedReader(new FileReader(DIR + getSafeDir() + fileName));
 
         while ((line = reader.readLine()) != null) {
             solution.add(line);
