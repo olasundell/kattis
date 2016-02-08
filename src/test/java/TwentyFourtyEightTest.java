@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import util.Matrix;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -113,10 +114,10 @@ public class TwentyFourtyEightTest extends AbstractTest {
 
     @Test
     public void shouldGetCorrectTile() {
-        int result = twentyFourtyEight.getTile(tempBoard, 0, 0, TwentyFourtyEight.Direction.LEFT);
+        int result = twentyFourtyEight.getTile(tempBoard, 0, 0, Matrix.Direction.LEFT);
         Assert.assertEquals(tempBoard[0][0], result);
 
-        result = twentyFourtyEight.getTile(tempBoard, 0, 0, TwentyFourtyEight.Direction.RIGHT);
+        result = twentyFourtyEight.getTile(tempBoard, 0, 0, Matrix.Direction.RIGHT);
         Assert.assertEquals(tempBoard[0][3], result);
     }
 
@@ -129,7 +130,7 @@ public class TwentyFourtyEightTest extends AbstractTest {
                 Arrays.asList(0, 0, 0, 0)
                 );
 
-        List<List<Integer>> result = twentyFourtyEight.createBoardFromTemp(tempBoard, TwentyFourtyEight.Direction.LEFT);
+        List<List<Integer>> result = twentyFourtyEight.createBoardFromTemp(tempBoard, Matrix.Direction.LEFT);
         Assert.assertEquals(expected, result);
     }
 
@@ -142,7 +143,7 @@ public class TwentyFourtyEightTest extends AbstractTest {
                 Arrays.asList(0, 0, 0, 0)
         );
 
-        List<List<Integer>> result = twentyFourtyEight.createBoardFromTemp(tempBoard, TwentyFourtyEight.Direction.RIGHT);
+        List<List<Integer>> result = twentyFourtyEight.createBoardFromTemp(tempBoard, Matrix.Direction.RIGHT);
         Assert.assertEquals(expected, result);
     }
 
@@ -155,7 +156,7 @@ public class TwentyFourtyEightTest extends AbstractTest {
                 Arrays.asList(8, 0, 0, 0)
         );
 
-        List<List<Integer>> result = twentyFourtyEight.createBoardFromTemp(tempBoard, TwentyFourtyEight.Direction.UP);
+        List<List<Integer>> result = twentyFourtyEight.createBoardFromTemp(tempBoard, Matrix.Direction.UP);
         Assert.assertEquals(expected, result);
     }
 
@@ -168,16 +169,16 @@ public class TwentyFourtyEightTest extends AbstractTest {
                 Arrays.asList(0, 0, 16, 1)
         );
 
-        List<List<Integer>> result = twentyFourtyEight.createBoardFromTemp(tempBoard, TwentyFourtyEight.Direction.DOWN);
+        List<List<Integer>> result = twentyFourtyEight.createBoardFromTemp(tempBoard, Matrix.Direction.DOWN);
         Assert.assertEquals(expected, result);
     }
 
     @Test
     public void shouldPrint() {
-        List<List<Integer>> boardDown = twentyFourtyEight.createBoardFromTemp(tempBoard, TwentyFourtyEight.Direction.DOWN);
-        String result = twentyFourtyEight.printBoard(boardDown, TwentyFourtyEight.Direction.DOWN);
-        List<List<Integer>> boardLeft = twentyFourtyEight.createBoardFromTemp(tempBoard, TwentyFourtyEight.Direction.LEFT);
-        String expected = twentyFourtyEight.printBoard(boardLeft, TwentyFourtyEight.Direction.LEFT);
+        List<List<Integer>> boardDown = twentyFourtyEight.createBoardFromTemp(tempBoard, Matrix.Direction.DOWN);
+        String result = twentyFourtyEight.printBoard(boardDown, Matrix.Direction.DOWN);
+        List<List<Integer>> boardLeft = twentyFourtyEight.createBoardFromTemp(tempBoard, Matrix.Direction.LEFT);
+        String expected = twentyFourtyEight.printBoard(boardLeft, Matrix.Direction.LEFT);
         Assert.assertEquals(expected, result);
     }
 

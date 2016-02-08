@@ -1,3 +1,5 @@
+import util.Matrix;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +15,7 @@ public class TwentyFourtyEight {
 
     public String solve(Scanner in) {
         int[][] tempBoard = readBoard(in);
-        Direction direction = findDirection(in);
+        Matrix.Direction direction = Matrix.findDirection(in.nextInt());
         List<List<Integer>> board = createBoardFromTemp(tempBoard, direction);
         List<List<Integer>> boardAfterMoves = new ArrayList<>();
 
@@ -22,7 +24,7 @@ public class TwentyFourtyEight {
         return printBoard(boardAfterMoves, direction);
     }
 
-    protected List<List<Integer>> createBoardFromTemp(int[][] tempBoard, Direction direction) {
+    protected List<List<Integer>> createBoardFromTemp(int[][] tempBoard, Matrix.Direction direction) {
         List<List<Integer>> board = new ArrayList<>();
 
         for (int i = 0 ; i < tempBoard.length ; i++) {
@@ -35,53 +37,23 @@ public class TwentyFourtyEight {
         return board;
     }
 
-    protected int getTile(int[][] tempBoard, int i, int j, Direction direction) {
-        return tempBoard[translateX(i, j, direction)][translateY(i, j, direction)];
+    protected int getTile(int[][] tempBoard, int i, int j, Matrix.Direction direction) {
+        return tempBoard[Matrix.translateX(i, j, 4, direction)][Matrix.translateY(i, j, 4, direction)];
     }
 
-
-    protected int translateX(int i, int j, Direction direction) {
-        switch (direction) {
-            case LEFT:
-            case RIGHT:
-                return i;
-            case UP:
-                return j;
-            case DOWN:
-                return 3 - j;
-        }
-
-        return -1;
-    }
-    protected int translateY(int i, int j, Direction direction) {
-        switch (direction) {
-            case LEFT:
-                return j;
-            case RIGHT:
-                return 3 - j;
-            case UP:
-                return i;
-            case DOWN:
-//                return i;
-                return 3 - i;
-
-        }
-
-        return -1;
-    }
 
     // TODO this is a very hacky method, should be improved upon considerably
-    protected String printBoard(List<List<Integer>> board, Direction direction) {
+    protected String printBoard(List<List<Integer>> board, Matrix.Direction direction) {
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0 ; i < 4 ; i++) {
             for (int j = 0; j < 3; j++) {
-                int x = translateX(i, j, direction);
-                int y = translateY(i, j, direction);
+                int x = Matrix.translateX(i, j, 4, direction);
+                int y = Matrix.translateY(i, j, 4, direction);
                 builder.append(board.get(x).get(y));
                 builder.append(" ");
             }
-            builder.append(board.get(translateX(i, 3, direction)).get(translateY(i, 3, direction)));
+            builder.append(board.get(Matrix.translateX(i, 3, 4, direction)).get(Matrix.translateY(i, 3, 4, direction)));
             if (i < 3) {
                 builder.append("\n");
             }
@@ -99,22 +71,6 @@ public class TwentyFourtyEight {
             }
         }
         return board;
-    }
-
-    private Direction findDirection(Scanner in) {
-        int i = in.nextInt();
-        switch (i) {
-            case 0:
-                return Direction.LEFT;
-            case 1:
-                return Direction.UP;
-            case 2:
-                return Direction.RIGHT;
-            case 3:
-                return Direction.DOWN;
-            default:
-                throw new IllegalArgumentException("Expected a number between 0-3 but got " + i);
-        }
     }
 
     protected List<Integer> moveAndCombine(List<Integer> start) {
@@ -143,25 +99,4 @@ public class TwentyFourtyEight {
         return result;
     }
 
-    protected enum Direction {
-        LEFT,
-        UP,
-        RIGHT,
-        DOWN;
-
-        Direction opposite() {
-            switch (this) {
-                case LEFT:
-                    return RIGHT;
-                case RIGHT:
-                    return LEFT;
-                case UP:
-                    return DOWN;
-                case DOWN:
-                    return UP;
-            }
-
-            return null;
-        }
-    }
 }
