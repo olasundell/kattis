@@ -1,4 +1,3 @@
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -6,16 +5,15 @@ import java.io.IOException;
 /**
  * TODO write documentation
  */
-public class CommunicationTest extends AbstractTest {
+public class MosquitoTest extends AbstractTest {
 
     @Test
-    @Ignore("does not work")
     public void one() throws IOException {
-        runTest(1, new Communication()::solve);
+        runTest(1, new Mosquito()::solve);
     }
 
     @Override
     protected String getDir() {
-        return "communication";
+        return "mosquito";
     }
 }
