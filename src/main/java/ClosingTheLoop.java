@@ -33,7 +33,7 @@ public class ClosingTheLoop {
                     redSegments.add(e);
                 }
             }
-            
+
             int total = 0;
 
             while (!blueSegments.isEmpty() && !redSegments.isEmpty()) {
