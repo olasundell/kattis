@@ -1,0 +1,10 @@
+define 5 hello there
+define 6 goodbye
+eval hello there < goodbye
+eval hello there > goodbye
+eval hello there = goodbye
+eval hello there = hi
+define 5 hi
+eval hello there = hi
+define 6 hi
+eval hello there = hi
