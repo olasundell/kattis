@@ -24,12 +24,22 @@ public class Measurement {
     }
 
     public String solve(Scanner in) {
-
         int distance = in.nextInt();
-        Unit fromUnit = aliases.get(in.next());
+	    String fromUnitStr = in.next();
+	    Unit fromUnit = aliases.get(fromUnitStr);
+
+	    if (fromUnit == null) {
+			throw new IllegalArgumentException(fromUnitStr + " is not a valid from unit");
+	    }
+
         // discard "in"
         in.next();
-        Unit toUnit = aliases.get(in.next());
+	    String toUnitStr = in.next();
+	    Unit toUnit = aliases.get(toUnitStr);
+
+	    if (toUnit == null) {
+		    throw new IllegalArgumentException(toUnitStr + " is not a valid from unit");
+	    }
 
         double factor = getConversion(fromUnit, toUnit);
 
@@ -70,7 +80,9 @@ public class Measurement {
 
         aliases.put("th", Unit.THOU);
         aliases.put("thou", Unit.THOU);
+        aliases.put("thous", Unit.THOU);
 
+	    aliases.put("inches", Unit.INCH);
         aliases.put("inch", Unit.INCH);
         aliases.put("in", Unit.INCH);
 
@@ -78,17 +90,25 @@ public class Measurement {
         aliases.put("feet", Unit.FOOT);
         aliases.put("ft", Unit.FOOT);
 
+	    aliases.put("yards", Unit.YARD);
         aliases.put("yard", Unit.YARD);
         aliases.put("yd", Unit.YARD);
 
+	    aliases.put("furlongs", Unit.FURLONG);
         aliases.put("furlong", Unit.FURLONG);
         aliases.put("fur", Unit.FURLONG);
 
+	    aliases.put("miles", Unit.MILE);
         aliases.put("mile", Unit.MILE);
         aliases.put("mi", Unit.MILE);
 
+	    aliases.put("chain", Unit.CHAIN);
+	    aliases.put("ch", Unit.CHAIN);
+	    aliases.put("chains", Unit.CHAIN);
+
         aliases.put("lea", Unit.LEAGUE);
         aliases.put("league", Unit.LEAGUE);
+	    aliases.put("leagues", Unit.LEAGUE);
 
         return aliases;
     }

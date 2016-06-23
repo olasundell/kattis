@@ -4,6 +4,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * TODO write documentation
@@ -18,15 +19,9 @@ public class MeasurementTest extends AbstractTest {
     }
 
     @Test
-    @Ignore("Rounding errors")
-    public void one() throws IOException {
-        runTest(1, measurement::solve);
-    }
-
-    @Test
-    @Ignore("Rounding errors")
-    public void two() throws IOException {
-        runTest(2, measurement::solve);
+    public void shouldParse() {
+        Assert.assertEquals("504.0", measurement.solve(new Scanner("42 ft in inch")));
+        Assert.assertTrue(measurement.solve(new Scanner("10 furlong in lea")).startsWith("0.41666666"));
     }
 
     @Test
@@ -42,6 +37,23 @@ public class MeasurementTest extends AbstractTest {
     @Test
     public void longerConversionShouldWork() {
         Assert.assertEquals(5280.0, measurement.getConversion(Measurement.Unit.MILE, Measurement.Unit.FOOT), 0.1);
+    }
+
+    @Test
+    public void selfConversionShouldWork() {
+    	for (Measurement.Unit unit : Measurement.Unit.values()) {
+            Assert.assertEquals(1.0, measurement.getConversion(unit, unit), 0.1);
+        }
+    }
+
+    @Test
+    public void loopAllConversions() {
+        Measurement.Unit[] values = Measurement.Unit.values();
+        for (int i = 0 ; i < values.length - 1 ; i++) {
+            measurement.getConversion(values[i], values[i + 1]);
+            measurement.getConversion(values[values.length - i - 1], values[values.length - i - 2]);
+        }
+
     }
 
     @Test
