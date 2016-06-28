@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -10,25 +11,57 @@ public class Toilet {
     }
 
     public String solve(Scanner in) {
-        byte b = in.nextByte();
         String line = in.next();
         int upStrategy = 0;
         int downStrategy = 0;
         int leaveStrategy = 0;
-        boolean up = b == 'U';
 
-        char[] chars = line.toCharArray();
+	    char[] lineC = line.toCharArray();
 
+	    char[] chars = Arrays.copyOfRange(lineC, 1, lineC.length);
+
+	    boolean up = lineC[0] == 'U';
+	    // strategy up
         for (char c: chars) {
-            // strategy up
-            if (!up) {
-                upStrategy++;
-            } else if (c == 'D') {
-                upStrategy += 2;
-            }
-            // strategy down
-            // strategy as used
+	        if (up && c == 'D') {
+		        upStrategy += 2;
+	        }
+
+        	if (!up) {
+        		upStrategy++;
+		        up = true;
+	        }
         }
-        return "";
+
+	    up = lineC[0] == 'U';
+
+	    // strategy down
+        for (char c: chars) {
+        	if (!up && c == 'U') {
+        		downStrategy += 2;
+	        }
+
+	        if (up) {
+	        	downStrategy++;
+		        up = false;
+	        }
+        }
+
+	    up = lineC[0] == 'U';
+
+	    for (char c: chars) {
+	    	if (c == 'U' && !up) {
+	    		up = true;
+			    leaveStrategy++;
+		    } else if (c == 'D' && up) {
+			    up = false;
+			    leaveStrategy++;
+		    }
+	    }
+
+        return String.format("%d\n%d\n%d",
+		        upStrategy,
+		        downStrategy,
+		        leaveStrategy);
     }
 }
