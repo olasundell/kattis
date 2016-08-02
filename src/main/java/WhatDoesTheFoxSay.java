@@ -18,15 +18,19 @@ public class WhatDoesTheFoxSay {
     public String solve(Scanner in) {
         int n = in.nextInt();
         List<String> lines = new ArrayList<>();
+        in.nextLine();
 
         for (int i = 0 ; i < n ; i++) {
-            in.nextLine();
             List<String> sounds = Arrays.asList(in.nextLine().split(" "));
             Set<String> knownSounds = new HashSet<>();
 
             while (in.hasNext()) {
                 String line = in.nextLine();
-                if (!"what does the fox say?".equals(line) && line.matches(".+ goes .+")) {
+	            if ("what does the fox say?".equals(line)) {
+	                break;
+                }
+
+                if (line.matches(".+ goes .+")) {
                     knownSounds.add(line.split(" ")[2]);
                 }
             }

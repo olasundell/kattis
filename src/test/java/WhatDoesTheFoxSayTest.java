@@ -29,6 +29,11 @@ public class WhatDoesTheFoxSayTest extends AbstractTest {
         runTest(4, new WhatDoesTheFoxSay()::solve);
     }
 
+    @Test
+    public void five() throws IOException {
+        runTest(5, new WhatDoesTheFoxSay()::solve);
+    }
+
     @Override
     protected String getDir() {
         return "whatdoesthefoxsay";
