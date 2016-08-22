@@ -22,7 +22,7 @@ else:
     urllib.request = urllib.error = urllib2
     urllib.parse = urllib
 
-_DEFAULT_CONFIG = '/usr/local/etc/kattisrc'
+_DEFAULT_CONFIG = '/etc/kattis/submit/kattisrc'
 _VERSION = 'Version: $Version: $'
 _LANGUAGE_GUESS = {
     '.java': 'Java',
