@@ -34,8 +34,8 @@ public class Matrix {
         return -1;
     }
 
-   public static int translateY(int i, int j, int size,
-                                Matrix.Direction direction) {
+    public static int translateY(int i, int j, int size,
+                                 Matrix.Direction direction) {
         switch (direction) {
             case LEFT:
                 return j;
@@ -51,6 +51,40 @@ public class Matrix {
         return -1;
     }
 
+    public enum CardinalDirection {
+        EAST,
+        WEST,
+        NORTH,
+        SOUTH;
+
+        public CardinalDirection turn(Direction direction) {
+            switch (direction) {
+                case RIGHT:
+                    switch (this) {
+                        case EAST:
+                            return SOUTH;
+                        case WEST:
+                            return NORTH;
+                        case SOUTH:
+                            return WEST;
+                        case NORTH:
+                            return EAST;
+                    }
+                case LEFT:
+                    switch (this) {
+                        case EAST:
+                            return NORTH;
+                        case WEST:
+                            return SOUTH;
+                        case SOUTH:
+                            return EAST;
+                        case NORTH:
+                            return WEST;
+                    }
+            }
+            return this;
+        }
+    }
 
     public enum Direction {
         LEFT,

@@ -1,9 +1,8 @@
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import util.AbstractTest;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * TODO write documentation

@@ -1,6 +1,7 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import util.AbstractTest;
 import util.Matrix;
 
 import java.io.IOException;

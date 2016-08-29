@@ -1,4 +1,5 @@
 import org.junit.Test;
+import util.AbstractTest;
 
 import java.io.File;
 import java.io.FileWriter;

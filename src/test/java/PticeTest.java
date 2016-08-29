@@ -1,4 +1,4 @@
-import static org.junit.Assert.*;
+import util.AbstractTest;
 
 /**
  * TODO write documentation
