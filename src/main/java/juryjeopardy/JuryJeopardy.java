@@ -90,7 +90,7 @@ public class JuryJeopardy {
 		maze.current = new Point(x, y);
 		maze.setCurrentToEmpty();
 
-		System.err.println(direction + " " + maze.current);
-		System.err.println(maze.prettyPrint());
+//		System.err.println(direction + " " + maze.current);
+//		System.err.println(maze.prettyPrint());
 	}
 }

@@ -70,7 +70,11 @@ class Maze {
 
 	public String prettyPrint() {
 		return maxY + " " + maxX + "\n" + tiles.stream()
-				.map(row -> row.stream().map(String::valueOf).collect(Collectors.joining()))
+				.limit(maxY)
+				.map(row -> row.stream()
+						.limit(maxX)
+						.map(String::valueOf)
+						.collect(Collectors.joining()))
 				.collect(Collectors.joining("\n"));
 	}
 
