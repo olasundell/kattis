@@ -6,14 +6,14 @@ import java.io.IOException;
 /**
  * TODO write documentation
  */
-public class PticeTest extends AbstractTest {
+public class KittenTest extends AbstractTest {
 	@Test
 	public void one() throws IOException {
-		runTest(1, new Ptice()::solve);
+		runTest(1, new Kitten()::solve);
 	}
 
 	@Override
 	protected String getDir() {
-		return "ptice";
+		return "kitten";
 	}
 }

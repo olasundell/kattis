@@ -6,14 +6,19 @@ import java.io.IOException;
 /**
  * TODO write documentation
  */
-public class PticeTest extends AbstractTest {
+public class WordCloudTest extends AbstractTest {
 	@Test
 	public void one() throws IOException {
-		runTest(1, new Ptice()::solve);
+		runTest(1, new WordCloud()::solve);
+	}
+
+	@Test
+	public void two() throws IOException {
+		runTest(2, new WordCloud()::solve);
 	}
 
 	@Override
 	protected String getDir() {
-		return "ptice";
+		return "wordcloud";
 	}
 }

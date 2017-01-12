@@ -1,3 +1,5 @@
+package hackerrank;
+
 import org.junit.Test;
 import util.AbstractTest;
 
@@ -6,14 +8,14 @@ import java.io.IOException;
 /**
  * TODO write documentation
  */
-public class PticeTest extends AbstractTest {
+public class CavityTest extends AbstractTest {
 	@Test
 	public void one() throws IOException {
-		runTest(1, new Ptice()::solve);
+		runTest(1, new Cavity()::solve);
 	}
 
 	@Override
 	protected String getDir() {
-		return "ptice";
+		return "hackerrank/cavity";
 	}
 }
