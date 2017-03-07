@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.*;
+
 /**
  * TODO write documentation
  */
@@ -51,6 +53,40 @@ public class Matrix {
         return -1;
     }
 
+    public static class Move {
+	    private final Direction direction;
+    	private final int amount;
+
+	    public Move(Direction direction, int amount) {
+		    this.direction = direction;
+		    this.amount = amount;
+	    }
+
+	    public Point getDelta() {
+		    switch (direction) {
+			    case UP:
+				    return new Point(0, -amount);
+			    case DOWN:
+				    return new Point(0, +amount);
+			    case LEFT:
+				    return new Point(-amount, 0);
+			    case RIGHT:
+				    return new Point(+amount, 0);
+		    }
+
+		    return null;
+	    }
+
+
+	    @Override
+	    public String toString() {
+		    return "Move{" +
+				    "direction=" + direction +
+				    ", amount=" + amount +
+				    '}';
+	    }
+    }
+
     public enum CardinalDirection {
         EAST,
         WEST,
@@ -91,6 +127,21 @@ public class Matrix {
         UP,
         RIGHT,
         DOWN;
+
+        public static Direction of(String str) {
+        	switch (str) {
+		        case "u":
+		        	return UP;
+		        case "d":
+		        	return DOWN;
+		        case "l":
+		        	return LEFT;
+		        case "r":
+		        	return RIGHT;
+	        }
+
+	        return null;
+        }
 
         Direction opposite() {
             switch (this) {

@@ -22,7 +22,7 @@ public class MastermindTest extends AbstractTest {
 
 	static List<Long> c = new ArrayList<>();
 
-	@Test
+/*	@Test
 	public void primeCalc() {
 		List<Integer> primes = new ArrayList<>();
 
@@ -40,7 +40,7 @@ public class MastermindTest extends AbstractTest {
 		}
 
 		primes.add(2);
-	}
+	}*/
 
 	private boolean isNotPrime(List<Integer> primes, int i) {
 		int sqrt = (int) Math.sqrt(i);
