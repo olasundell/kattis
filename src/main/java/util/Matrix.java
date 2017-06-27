@@ -53,6 +53,40 @@ public class Matrix {
         return -1;
     }
 
+	public static class CardinalMove {
+		private final CardinalDirection direction;
+		private final int amount;
+
+		public CardinalMove(CardinalDirection direction, int amount) {
+			this.direction = direction;
+			this.amount = amount;
+		}
+
+		public Point getDelta() {
+			switch (direction) {
+				case NORTH:
+					return new Point(0, -amount);
+				case SOUTH:
+					return new Point(0, +amount);
+				case WEST:
+					return new Point(-amount, 0);
+				case EAST:
+					return new Point(+amount, 0);
+			}
+
+			return null;
+		}
+
+
+		@Override
+		public String toString() {
+			return "CardinalMove{" +
+					"direction=" + direction +
+					", amount=" + amount +
+					'}';
+		}
+
+	}
     public static class Move {
 	    private final Direction direction;
     	private final int amount;

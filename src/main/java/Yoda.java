@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -13,29 +12,17 @@ public class Yoda {
 		System.out.println(new Yoda().solve(in));
 	}
 
-	// TODO major cleanup
 	public String solve(Scanner in) {
-		List<Integer> firstIn = new ArrayList<>();
+		final String firstLine = in.nextLine();
+		final String secondLine = in.nextLine();
 
-		for (char c: in.nextLine().toCharArray()) {
-			firstIn.add(c - '0');
-		}
-
-		List<Integer> secondIn = new ArrayList<>();
-
-		for (char c: in.nextLine().toCharArray()) {
-			secondIn.add(c - '0');
-		}
+		List<Integer> firstIn = createList(firstLine);
+		List<Integer> secondIn = createList(secondLine);
 
 		int max = Math.max(firstIn.size(), secondIn.size());
 
-		for (int i = 0 ; i < max - firstIn.size() ; i++) {
-			firstIn.add(0, 0);
-		}
-
-		for (int i = 0 ; i < max - secondIn.size() ; i++) {
-			secondIn.add(0, 0);
-		}
+		pad(firstIn, max);
+		pad(secondIn, max);
 
 		List<Integer> first = new ArrayList<>();
 		List<Integer> second = new ArrayList<>();
@@ -51,22 +38,35 @@ public class Yoda {
 			}
 		}
 
-		String f;
-		String s;
+		String f = createString(first);
+		String s = createString(second);
 
-		if (first.isEmpty()) {
+		return f + "\n" + s;
+	}
+
+	private List<Integer> createList(String line) {
+		List<Integer> list = new ArrayList<>();
+		for (char c: line.toCharArray()) {
+			list.add(c - '0');
+		}
+		return list;
+	}
+
+	private String createString(List<Integer> list) {
+		String f;
+		if (list.isEmpty()) {
 			f = "YODA";
 		} else {
-			f = first.stream().map(String::valueOf).collect(Collectors.joining());
+			f = list.stream().map(String::valueOf).collect(Collectors.joining());
 			f = String.valueOf(Integer.valueOf(f));
 		}
+		return f;
+	}
 
-		if (second.isEmpty()) {
-			s = "YODA";
-		} else {
-			s = second.stream().map(String::valueOf).collect(Collectors.joining());
-			s = String.valueOf(Integer.valueOf(s));
+	private void pad(List<Integer> list, int max) {
+		final int count = max - list.size();
+		for (int i = 0; i < count; i++) {
+			list.add(0, 0);
 		}
-		return f + "\n" + s;
 	}
 }
