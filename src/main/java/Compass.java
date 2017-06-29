@@ -1,3 +1,4 @@
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 /**
@@ -13,6 +14,16 @@ public class Compass {
 		int current = in.nextInt();
 		int correct = in.nextInt();
 
-		return "";
+		int diff = correct - current;
+
+		if (diff > 180) {
+			diff -= 360;
+		}
+
+		if (diff <= -180) {
+			diff += 360;
+		}
+
+		return String.valueOf(diff);
 	}
 }

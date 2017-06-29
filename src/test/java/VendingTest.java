@@ -26,11 +26,6 @@ public class VendingTest extends AbstractTest {
 		runTest(3, new Vending()::solve);
 	}
 
-	@Test
-	public void four() throws IOException {
-		runTest(4, new Vending()::solve);
-	}
-
 //	@Test
 	public void writeToFile() throws IOException {
 		File in = new File("/Users/olasundell/code/kattis/src/test/resources/vending/4.in");
