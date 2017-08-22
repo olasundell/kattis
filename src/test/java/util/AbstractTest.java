@@ -6,10 +6,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -17,7 +20,36 @@ import java.util.function.Function;
  */
 public abstract class AbstractTest {
     protected final static String DIR = "src/test/resources/";
-    protected abstract String getDir();
+
+	public void writeToFile(String test, int num, Consumer<SafeWriter> inConsumer, Consumer<SafeWriter> ansConsumer) throws IOException {
+		File in = new File("/Users/olasundell/code/kattis/src/test/resources/" + test + "/" + num + ".in");
+		File ans = new File("/Users/olasundell/code/kattis/src/test/resources/" + test + "/" + num +".ans");
+
+		SafeWriter inWriter = new SafeWriter(in);
+		inConsumer.accept(inWriter);
+		inWriter.close();
+
+		SafeWriter ansWriter = new SafeWriter(ans);
+		ansConsumer.accept(ansWriter);
+		ansWriter.close();
+	}
+
+	public static class SafeWriter extends FileWriter {
+		public SafeWriter(File file) throws IOException {
+			super(file);
+		}
+
+		@Override
+		public void write(String str) {
+			try {
+				super.write(str);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	protected abstract String getDir();
 
     protected void runTest(int i, Function<Scanner, String> function) throws IOException {
         String result = function.apply(buildScanner(i + ".in"));
