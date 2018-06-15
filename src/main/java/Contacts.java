@@ -48,7 +48,6 @@ public class Contacts {
 	int find(Trie node, Deque<Character> word) {
 		if (word.isEmpty()) {
 			return node.subs;
-//			return count(node);
 		}
 
 		if (!node.children.containsKey(word.peekFirst())) {

@@ -60,7 +60,7 @@ public class Metaprogramming {
 			}
 		}
 		// this should be an exception.
-		return "undfined";
+		return "undefined";
 	}
 
 	protected String getKey(String line, String value) {

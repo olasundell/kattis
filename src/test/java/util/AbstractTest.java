@@ -8,6 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -58,7 +61,13 @@ public abstract class AbstractTest {
     }
 
     protected Scanner buildScanner(String s) throws FileNotFoundException {
-        return new Scanner(new File(DIR + getSafeDir() + s));
+	    final File source = new File(DIR + getSafeDir() + s);
+	    if (source.exists()) {
+		    return new Scanner(source);
+	    } else {
+		    final InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(getSafeDir() + s);
+		    return new Scanner(resourceAsStream);
+	    }
     }
 
     // TODO this could probably be slightly cleaner
@@ -73,15 +82,23 @@ public abstract class AbstractTest {
     }
 
     protected String readFile(String fileName) throws IOException {
-        List<String> solution = new ArrayList<>();
-        String line;
+	    List<String> solution = new ArrayList<>();
+	    String line;
 
-        final BufferedReader reader = new BufferedReader(new FileReader(DIR + getSafeDir() + fileName));
+	    Reader in;
 
-        while ((line = reader.readLine()) != null) {
-            solution.add(line);
-        }
+	    if (new File(DIR + getSafeDir() + fileName).exists()) {
+		    in = new FileReader(DIR + getSafeDir() + fileName);
+	    } else {
+		    final InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(getSafeDir() + fileName);
+	    	in = new InputStreamReader(resourceAsStream);
+	    }
+	    final BufferedReader reader = new BufferedReader(in);
 
-        return String.join("\n", solution);
+	    while ((line = reader.readLine()) != null) {
+		    solution.add(line);
+	    }
+
+	    return String.join("\n", solution);
     }
 }

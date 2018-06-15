@@ -1,9 +1,8 @@
 package util
 
+import org.junit.Assert
 import util.AbstractTest.DIR
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileReader
+import java.io.*
 import java.util.*
 import java.util.stream.Collectors
 
@@ -13,22 +12,52 @@ import java.util.stream.Collectors
 
 abstract class AbstractKotlinTest {
     fun runTest(i: Int, f: (Scanner) -> String) {
-        val result = f.apply { buildScanner("$i.in") }
-        val expected = readFile("$i.ans")
+        val result = f(buildScanner("$i.in"))
+        val expected = readFile("$i.ans").trim()
+        Assert.assertEquals(expected, result)
     }
 
-    fun buildScanner(s: String): Scanner {
+    fun runTestTokenizer(i: Int, f: (StreamTokenizer) -> String) {
+        val result = f(buildStreamTokenizer("$i.in"))
+        val expected = readFile("$i.ans").trim()
+        Assert.assertEquals(expected, result)
+    }
+
+    private fun buildStreamTokenizer(s: String): StreamTokenizer {
         val dir = getDir()
-        return Scanner(File(DIR + dir +  s))
+        val s1 = DIR + dir + s
+        val file = File(s1)
+
+        if (file.exists()) {
+            return StreamTokenizer(FileReader(file));
+        } else {
+            val resource = this::class.java.getResource(dir + s)
+            val text = resource.readText()
+            return StreamTokenizer(StringReader(text))
+        }
     }
 
-    private fun getDir() = this.javaClass.simpleName.replace("Test".toRegex(), "/")
+    private fun buildScanner(s: String): Scanner {
+        val dir = getDir()
+        val s1 = DIR + dir + s
+        val file = File(s1)
+
+        if (file.exists()) {
+            return Scanner(file);
+        } else {
+            val resource = this::class.java.getResource(dir + s)
+            val text = resource.readText()
+            return Scanner(text)
+        }
+    }
+
+    private fun getDir() = this.javaClass.simpleName
+            .replace("Test".toRegex(), "/")
+            .toLowerCase()
 
     fun readFile(name: String): String {
-        val reader = BufferedReader(FileReader(DIR + getDir() + name));
-        var line: String
-
-        return reader.lines().collect(Collectors.joining("\n"))
+        val resource = this::class.java.getResource(getDir() + name)
+        return resource.readText()
     }
 
 }
