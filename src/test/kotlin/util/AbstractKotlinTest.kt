@@ -39,13 +39,13 @@ abstract class AbstractKotlinTest {
 
     private fun buildScanner(s: String): Scanner {
         val dir = getDir()
-        val s1 = DIR + dir + s
+        val s1 = DIR + dir + s.toLowerCase()
         val file = File(s1)
 
         if (file.exists()) {
             return Scanner(file);
         } else {
-            val resource = this::class.java.getResource(dir + s)
+            val resource = this::class.java.getResource(dir + s.toLowerCase())
             val text = resource.readText()
             return Scanner(text)
         }
