@@ -2,9 +2,13 @@ package util
 
 import org.junit.Assert
 import util.AbstractTest.DIR
-import java.io.*
+import java.io.File
+import java.io.FileReader
+import java.io.StreamTokenizer
+import java.io.StringReader
+import java.net.URL
 import java.util.*
-import java.util.stream.Collectors
+import kotlin.jvm.internal.FunctionReference
 
 /**
  * TODO write documentation
@@ -12,9 +16,21 @@ import java.util.stream.Collectors
 
 abstract class AbstractKotlinTest {
     fun runTest(i: Int, f: (Scanner) -> String) {
-        val result = f(buildScanner("$i.in"))
-        val expected = readFile("$i.ans").trim()
+        val prefix = prefix((f as FunctionReference).boundReceiver.javaClass)
+        val result = f(buildScanner("$prefix$i.in"))
+        val expected = readFile("$prefix$i.ans").trim()
         Assert.assertEquals(expected, result)
+    }
+
+    private fun <T> prefix(javaClass: Class<T>): String {
+        val name: String = javaClass.name
+        return if (!name.isBlank()) {
+            val replace = name.replace('.', '/')
+                    .toLowerCase()
+            "/$replace/"
+        } else {
+            ""
+        }
     }
 
     fun runTestTokenizer(i: Int, f: (StreamTokenizer) -> String) {
@@ -38,26 +54,32 @@ abstract class AbstractKotlinTest {
     }
 
     private fun buildScanner(s: String): Scanner {
-        val dir = getDir()
-        val s1 = DIR + dir + s.toLowerCase()
-        val file = File(s1)
+//        val dir = getDir()
+//        val s1 = DIR + dir + s.toLowerCase()
+        val file = File(s)
 
         if (file.exists()) {
             return Scanner(file);
         } else {
-            val resource = this::class.java.getResource(dir + s.toLowerCase())
-            val text = resource.readText()
+//            val s2 = dir + s.toLowerCase()
+//            val s2 = dir
+//            val s2 = s.toLowerCase()
+            val resource: URL? = this::class.java.getResource(s)
+            val text = resource?.readText() ?: throw IllegalStateException(s)
             return Scanner(text)
         }
     }
 
-    private fun getDir() = this.javaClass.simpleName
+    private fun getDir(): String =
+            prefix(this.javaClass) +
+                    this.javaClass.name.replace('.','/')
+//                    this.javaClass.name
             .replace("Test".toRegex(), "/")
             .toLowerCase()
 
     fun readFile(name: String): String {
-        val resource = this::class.java.getResource(getDir() + name)
-        return resource.readText()
+        val resource: URL? = this::class.java.getResource(name)
+        return resource?.readText() ?: throw IllegalStateException(name)
     }
 
 }
