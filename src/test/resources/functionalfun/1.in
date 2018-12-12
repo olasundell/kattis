@@ -1,0 +1,28 @@
+domain 1 2 3 4 5
+codomain 1 4 16
+3
+1 -> 1
+2 -> 4
+4 -> 16
+domain 1
+codomain 0 1
+2
+1 -> 1
+1 -> 0
+domain apple banana pear kiwi
+codomain house cat car
+4
+kiwi -> cat
+apple -> house
+banana -> cat
+pear -> car
+domain john mary fred
+codomain 1 2 3 4
+2
+john -> 4
+mary -> 2
+domain i like to program
+codomain what about you
+2
+like -> you
+program -> you
