@@ -54,7 +54,7 @@ class Dec4 {
             }
         }
 
-        fun mostMinute(): Pair<Int, Int> = sleepTimes.toList().sortedByDescending { m -> m.second }[0]
+        fun mostMinute(): Pair<Int, Int> = sleepTimes.toList().sortedByDescending { m -> m.second }.first()
     }
 }
 
