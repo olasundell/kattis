@@ -203,6 +203,63 @@ class Dec13 {
         operator fun plus(intersection: Intersection): State = State(this.rectangles, this.intersections.plus(intersection), this.carts)
         operator fun plus(cart: Cart): State = State(this.rectangles, this.intersections, this.carts.plus(cart))
         operator fun plus(carts: Iterable<Cart>): State = State(this.rectangles, this.intersections, this.carts.plus(carts))
+
+        override fun toString(): String {
+            val maxX = rectangles.map { it.downRight.x }.max()!!
+            val minX = rectangles.map { it.upLeft.x }.min()!!
+
+            val maxY = rectangles.map { it.downRight.y }.max()!!
+            val minY = rectangles.map { it.upLeft.y }.min()!!
+
+            val rows = Array<CharArray>(maxY + 1)  { CharArray(maxX + 1) { '.' } }
+
+            rectangles.forEach {
+                rows[it.upLeft.y][it.upLeft.x] = '/'
+                rows[it.downRight.y][it.downRight.x] = '/'
+                rows[it.upLeft.y][it.downRight.x] = '\\'
+                rows[it.downRight.y][it.upLeft.x] = '\\'
+
+                for (x in it.upLeft.x + 1 until it.downRight.x) {
+                    rows[it.upLeft.y][x] = '-'
+                    rows[it.downRight.y][x] = '-'
+                }
+
+                for (y in it.upLeft.y + 1 until it.downRight.y) {
+                    rows[y][it.upLeft.x] = '|'
+                    rows[y][it.downRight.x] = '|'
+                }
+            }
+
+            intersections.forEach {
+                rows[it.point.y][it.point.x] = '+'
+            }
+
+            carts.forEach {
+                rows[it.cartPosDir.pos.y][it.cartPosDir.pos.x] = when (it.cartPosDir.dir) {
+                    Direction.LEFT -> '<'
+                    Direction.RIGHT -> '>'
+                    Direction.DOWN -> 'v'
+                    Direction.UP -> '^'
+                    else -> 'X'
+                }
+            }
+
+//            for (y in minY..maxY) {
+//                val row = mutableListOf<Char>()
+//                for (x in minX..maxX) {
+//                    val p = Point(x, y)
+//                    row.add(when (rectangles.filter { it.contains(p) }.size) {
+//                        0 -> '.'
+//                        1 -> '|'
+//                        else -> '+'
+//                    })
+//                }
+//
+//                rows.add(row)
+//            }
+
+            return rows.joinToString(separator = "\n") { it.joinToString(separator = "") }
+        }
     }
 
     data class Intersection(val point: Point, val rectangles: Set<Rectangle>)

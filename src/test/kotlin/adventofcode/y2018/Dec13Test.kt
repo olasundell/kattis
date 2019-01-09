@@ -6,6 +6,7 @@ import util.AbstractKotlinTest
 
 import org.junit.Test
 import adventofcode.y2018.Dec13.*
+import java.lang.System.out
 
 /**
  * TODO write documentation
@@ -81,15 +82,21 @@ class Dec13Test : AbstractKotlinTest() {
         Assert.assertEquals(CartPosDir(Dec13.Point(2, 4), Direction.LEFT), moveCart.cartPosDir)
     }
 
-//    @Test
-//    fun shouldTurnAtIntersections() {
-//        val cart = Dec13.Cart(CartPosDir(Dec13.Point(3, 2), Dec13.Direction.DOWN), rectangle)
-//
-//        val intersectRect = Dec13.Rectangle(Dec13.Point(2, 3), Dec13.Point(5, 5))
-//        val lIntersections = setOf<Intersection>(Intersection())
-//        val moveCart = Dec13().moveCart(cart, rectangle, 2, setOf(Dec13.Intersection(Dec13.Point(3, 3), setOf(intersectRect, rectangle))))
-//        Assert.assertEquals(Dec13.Point(4, 3), moveCart.cartPos)
-//    }
+    @Test
+    fun shouldTurnAtIntersections() {
+        val cart = Dec13.Cart(CartPosDir(Dec13.Point(3, 2), Dec13.Direction.DOWN), rectangle)
+
+        val intersectRect = Dec13.Rectangle(Dec13.Point(2, 3), Dec13.Point(5, 5))
+
+        val rectangles = setOf(rectangle, intersectRect)
+        val intersections1 = setOf(Intersection(Point(3, 3), rectangles), Intersection(Point(2,4), rectangles))
+
+        val state = State(rectangles, intersections1, listOf(cart))
+
+        out.println(state.toString())
+        val moveCart = move(cart, intersections1, 1)
+//        Assert.assertEquals(CartPosDir(Point(4, 3), Direction.RIGHT), moveCart.cartPosDir)
+    }
 
 //    @Test
 //    fun shouldNotHaveCollision() {
