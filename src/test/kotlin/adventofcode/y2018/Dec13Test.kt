@@ -5,12 +5,32 @@ import org.junit.Before
 import util.AbstractKotlinTest
 
 import org.junit.Test
+import adventofcode.y2018.Dec13.*
 
 /**
  * TODO write documentation
  */
 class Dec13Test : AbstractKotlinTest() {
     lateinit var rectangle: Dec13.Rectangle
+    lateinit var intersections: Set<Dec13.Intersection>
+
+    @Before
+    fun setup() {
+        val upLeft = Point(1, 1)
+        val downRight = Point(3, 4)
+
+        rectangle = Rectangle(upLeft, downRight)
+        intersections = setOf()
+    }
+
+    private fun move(cart: Cart, intersections: Set<Intersection>, iterations: Int): Cart {
+        var result = cart
+        for (i in 0 until iterations) {
+            result = Dec13().moveCart(result, intersections)
+        }
+
+        return result
+    }
 
 //    @Test
     fun unitOne() {
@@ -19,88 +39,81 @@ class Dec13Test : AbstractKotlinTest() {
 
     @Test
     fun moveRightOnceTest() {
-        val cart = Dec13.Cart(Dec13.Point(2, 1), Dec13.Direction.RIGHT)
-        val moveCart = Dec13().moveCart(cart, rectangle, 1)
+        val cart = Cart(CartPosDir(Point(2, 1), Direction.RIGHT), rectangle)
+        val moveCart = Dec13().moveCart(cart, intersections)
 
-        Assert.assertEquals(Dec13.Point(3, 1), moveCart.cartPos)
+        Assert.assertEquals(CartPosDir(Point(3, 1), Direction.RIGHT), moveCart.cartPosDir)
     }
 
     @Test
     fun moveRightThroughUpperCornerTest() {
-        val cart = Dec13.Cart(Dec13.Point(2, 1), Dec13.Direction.RIGHT)
-        val moveCart = Dec13().moveCart(cart, rectangle, 2)
+        val cart = Cart(CartPosDir(Point(2, 1), Direction.RIGHT), rectangle)
 
-        Assert.assertEquals(Dec13.Point(3, 2), moveCart.cartPos)
+        val moveCart = move(cart, intersections, 2)
+
+        Assert.assertEquals(CartPosDir(Point(3, 2), Direction.DOWN), moveCart.cartPosDir)
     }
 
     @Test
     fun moveLeftThroughUpperCornerTest() {
-        val cart = Dec13.Cart(Dec13.Point(2, 1), Dec13.Direction.LEFT)
+        val cart = Cart(CartPosDir(Point(2, 1), Direction.LEFT), rectangle)
 
-        val moveCart = Dec13().moveCart(cart, rectangle, 2)
+        val moveCart = move(cart, intersections, 2)
 
-        Assert.assertEquals(Dec13.Point(1, 2), moveCart.cartPos)
+        Assert.assertEquals(CartPosDir(Dec13.Point(1, 2), Direction.DOWN), moveCart.cartPosDir)
     }
 
     @Test
     fun moveUpThroughUpperCornerTest() {
-        val cart = Dec13.Cart(Dec13.Point(1, 2), Dec13.Direction.UP)
+        val cart = Cart(CartPosDir(Point(1, 2), Direction.UP), rectangle)
 
-        val moveCart = Dec13().moveCart(cart, rectangle, 2)
+        val moveCart = move(cart, intersections, 2)
 
-        Assert.assertEquals(Dec13.Point(2, 1), moveCart.cartPos)
+        Assert.assertEquals(CartPosDir(Dec13.Point(2, 1), Direction.RIGHT), moveCart.cartPosDir)
     }
 
     @Test
     fun moveDownThroughLowerCornerTest() {
-        val cart = Dec13.Cart(Dec13.Point(3, 3), Dec13.Direction.DOWN)
+        val cart = Cart(CartPosDir(Point(3, 3), Direction.DOWN), rectangle)
 
-        val moveCart = Dec13().moveCart(cart, rectangle, 2)
+        val moveCart = move(cart, intersections, 2)
 
-        Assert.assertEquals(Dec13.Point(2, 4), moveCart.cartPos)
+        Assert.assertEquals(CartPosDir(Dec13.Point(2, 4), Direction.LEFT), moveCart.cartPosDir)
     }
 
-    @Test
-    fun shouldTurnAtIntersections() {
-        val cart = Dec13.Cart(Dec13.Point(3, 2), Dec13.Direction.DOWN)
+//    @Test
+//    fun shouldTurnAtIntersections() {
+//        val cart = Dec13.Cart(CartPosDir(Dec13.Point(3, 2), Dec13.Direction.DOWN), rectangle)
+//
+//        val intersectRect = Dec13.Rectangle(Dec13.Point(2, 3), Dec13.Point(5, 5))
+//        val lIntersections = setOf<Intersection>(Intersection())
+//        val moveCart = Dec13().moveCart(cart, rectangle, 2, setOf(Dec13.Intersection(Dec13.Point(3, 3), setOf(intersectRect, rectangle))))
+//        Assert.assertEquals(Dec13.Point(4, 3), moveCart.cartPos)
+//    }
 
-        val intersectRect = Dec13.Rectangle(Dec13.Point(2, 3), Dec13.Point(5, 5))
-        val moveCart = Dec13().moveCart(cart, rectangle, 2, setOf(Dec13.Intersection(Dec13.Point(3, 3), setOf(intersectRect, rectangle))))
-        Assert.assertEquals(Dec13.Point(4, 3), moveCart.cartPos)
-    }
-
-    @Test
-    fun shouldNotHaveCollision() {
-        val cart1 = Dec13.Cart(Dec13.Point(3, 3), Dec13.Direction.DOWN)
-        val cart2 = Dec13.Cart(Dec13.Point(4, 3), Dec13.Direction.DOWN)
-
-        val state = Dec13.State(setOf(rectangle), setOf(), listOf(cart1, cart2))
-
-        Assert.assertFalse(Dec13().hasCollision(state))
-    }
-
-    @Test
-    fun shouldHaveCollision() {
-        val cart1 = Dec13.Cart(Dec13.Point(3, 3), Dec13.Direction.DOWN)
-        val cart2 = Dec13.Cart(Dec13.Point(3, 3), Dec13.Direction.DOWN)
-
-        val state = Dec13.State(setOf(rectangle), setOf(), listOf(cart1, cart2))
-
-        Assert.assertTrue(Dec13().hasCollision(state))
-    }
-
-    @Test
-    fun shouldHaveCorrectStateAt() {
-        val cart = Dec13.Cart(Dec13.Point(2, 1), Dec13.Direction.RIGHT)
-//        Dec13().stateAt
-    }
-
-    @Before
-    fun setup() {
-        val upLeft = Dec13.Point(1, 1)
-        val downRight = Dec13.Point(3, 4)
-
-        rectangle = Dec13.Rectangle(upLeft, downRight)
-    }
-
+//    @Test
+//    fun shouldNotHaveCollision() {
+//        val cart1 = Dec13.Cart(Dec13.Point(3, 3), Dec13.Direction.DOWN)
+//        val cart2 = Dec13.Cart(Dec13.Point(4, 3), Dec13.Direction.DOWN)
+//
+//        val state = Dec13.State(setOf(rectangle), setOf(), listOf(cart1, cart2))
+//
+//        Assert.assertFalse(Dec13().hasCollision(state))
+//    }
+//
+//    @Test
+//    fun shouldHaveCollision() {
+//        val cart1 = Dec13.Cart(Dec13.Point(3, 3), Dec13.Direction.DOWN)
+//        val cart2 = Dec13.Cart(Dec13.Point(3, 3), Dec13.Direction.DOWN)
+//
+//        val state = Dec13.State(setOf(rectangle), setOf(), listOf(cart1, cart2))
+//
+//        Assert.assertTrue(Dec13().hasCollision(state))
+//    }
+//
+//    @Test
+//    fun shouldHaveCorrectStateAt() {
+//        val cart = Dec13.Cart(Dec13.Point(2, 1), Dec13.Direction.RIGHT)
+////        Dec13().stateAt
+//    }
 }
