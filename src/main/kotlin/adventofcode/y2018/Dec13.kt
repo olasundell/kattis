@@ -16,89 +16,120 @@ class Dec13 {
         }
 
         val state = initState(lines)
+        var stateAt = state
+
+        System.err.println("$stateAt\n")
 
         for (i in 0..1_000) {
-            if (hasCollision(stateAt(state, i))) {
-                System.out.println("Collision at $i")
-                return "$i"
+            try {
+                stateAt = iterateState(stateAt)
+                System.err.println("$stateAt\n")
+            } catch (e: CollisionException) {
+                return e.toString()
             }
         }
 
         return "-1"
     }
 
-    fun stateAt(state: State, iteration: Int): State {
-        var st = state
-        for (cart in state.carts) {
+    fun iterateState(state: State): State {
+        var st = State(state.rectangles, state.intersections, state.carts.map { moveCart(it, state.intersections) })
 
+        for (r in state.rectangles) {
+            if (hasCollision(st)) {
+                val pos = st.carts.map { it.cartPosDir.pos }
+                val map = mutableMapOf<Point, Int>()
+                pos.forEach { map.merge(it, 1) { t: Int, u: Int -> u + 1 } }
+
+                val p = map.filter { entry -> entry.value > 1 }.entries.first()
+                throw CollisionException(p.key)
+            }
         }
+
+        return st
+    }
+
+    class CollisionException(val p: Point): Exception() {
+        override fun toString(): String {
+            return "(${p.x}, ${p.y})"
+        }
+    }
+
+    fun stateAt(state: State, iteration: Int): State {
+        var st = State(state.rectangles, state.intersections, state.carts.map { moveCart(it, state.intersections) })
+
         for (r in state.rectangles) {
             if (hasCollision(st)) {
                 return COLLIDED
             }
         }
-//        return State(state.rectangles.map { moveCart(it, iteration) }.toSet(), state.intersections)
+
         return state
     }
 
     fun moveCart(cart: Cart, intersections: Set<Intersection> = setOf()): Cart {
         val nP = cart.move()
-        return if (cart.rectangle.contains(nP.pos)) {
+        val newCart = if (cart.rectangle.onEdge(nP.pos)) {
             cart.at(nP)
         } else {
-//            val dir = when (cart.cartPosDir.dir) {
-//
-//                Direction.UP, Direction.DOWN -> if (cart.cartPosDir.pos.x == cart.rectangle.upLeft.x) Direction.RIGHT else Direction.LEFT
-//                Direction.LEFT, Direction.RIGHT -> if (cart.cartPosDir.pos.y == cart.rectangle.upLeft.y) Direction.DOWN else Direction.UP
-//                else -> Direction.NONE
-//            }
-
-            val dir: Direction = when (cart.cartPosDir.dir) {
-                Direction.UP -> if (cart.isAtTop()) {
-                    if (cart.isLeftmost()) {
-                        Direction.RIGHT
-                    } else {
-                        Direction.LEFT
-                    }
-                } else {
-                    Direction.NONE
-                }
-
-                Direction.DOWN -> if (cart.isAtBottom()) {
-                    if (cart.isLeftmost()) {
-                        Direction.LEFT
-                    } else {
-                        Direction.RIGHT
-                    }
-                } else {
-                    Direction.NONE
-                }
-
-                Direction.LEFT -> if (cart.isLeftmost()) {
-                    if (cart.isAtBottom()) {
-                        Direction.RIGHT
-                    } else {
-                        Direction.LEFT
-                    }
-                } else {
-                    Direction.NONE
-                }
-
-                Direction.RIGHT -> if (cart.isRightmost()) {
-                    if (cart.isAtBottom()) {
-                        Direction.LEFT
-                    } else {
-                        Direction.RIGHT
-                    }
-                } else {
-                    Direction.NONE
-                }
-
-                else -> cart.cartPosDir.dir
-            }
-
+            val dir: Direction = findNextCartDirection(cart)
             cart.at(cart.move(dir))
         }
+
+        val filter = intersections.filter { it.point == newCart.cartPosDir.pos }
+        return if (filter.isNotEmpty()) {
+            val intersecting = filter[0].rectangles.filterNot { it == newCart.rectangle }[0]
+            newCart.nextIntersection(intersecting, cart.rectangle)
+        } else {
+            newCart
+        }
+    }
+
+    private fun findNextCartDirection(cart: Cart): Direction {
+        val dir: Direction = when (cart.cartPosDir.dir) {
+            Direction.UP -> if (cart.isAtTop()) {
+                if (cart.isLeftmost()) {
+                    Direction.RIGHT
+                } else {
+                    Direction.LEFT
+                }
+            } else {
+                Direction.NONE
+            }
+
+            Direction.DOWN -> if (cart.isAtBottom()) {
+                if (cart.isLeftmost()) {
+                    Direction.LEFT
+                } else {
+                    Direction.RIGHT
+                }
+            } else {
+                Direction.NONE
+            }
+
+            Direction.LEFT -> if (cart.isLeftmost()) {
+                if (cart.isAtBottom()) {
+                    Direction.RIGHT
+                } else {
+                    Direction.LEFT
+                }
+            } else {
+                Direction.NONE
+            }
+
+            Direction.RIGHT -> if (cart.isRightmost()) {
+                if (cart.isAtBottom()) {
+                    Direction.LEFT
+                } else {
+                    Direction.RIGHT
+                }
+            } else {
+                Direction.NONE
+            }
+
+            else -> cart.cartPosDir.dir
+        }
+        return dir
     }
 
     fun hasCollision(state: State) = state.carts.map { it.cartPosDir.pos }.toSet().size != state.carts.size
@@ -107,32 +138,35 @@ class Dec13 {
         var state: State = State(setOf(), setOf(), listOf())
         for (y in 0 until lines.size) {
             val currentLine = lines[y]
-            for (x in 0 until currentLine.length) {
+            for (x in currentLine.indices) {
                 if (currentLine[x] == '/') {
-                    var currentCarts = setOf<CartPosDir>()
+                    val currentCarts = mutableSetOf<CartPosDir>()
                     if (isLeftSideOfRectangle(currentLine, x)) {
+                        // trace right
                         var endX = 0
                         for (i in x + 1 until currentLine.length) {
                             if (currentLine[i] == '\\') {
                                 endX = i
+                                break
                             }
                             val dir = Direction.of(currentLine[i])
                             if (dir != Direction.NONE) {
-                                currentCarts = currentCarts.plus(CartPosDir(Point(i, y), dir))
+                                currentCarts.add(CartPosDir(Point(i, y), dir))
                             }
                         }
 
+                        // trace down
                         var endY = 0
 
                         for (i in y + 1 until lines.size) {
-                            val dir = Direction.of(currentLine[i])
+                            val dir = Direction.of(lines[i][x])
                             if (dir != Direction.NONE) {
-                                currentCarts = currentCarts.plus(CartPosDir(Point(i, y), dir))
+                                currentCarts.add(CartPosDir(Point(x, i), dir))
                             }
 
-                            val dir2 = Direction.of(currentLine[endX])
+                            val dir2 = Direction.of(lines[i][endX])
                             if (dir2 != Direction.NONE) {
-                                currentCarts = currentCarts.plus(CartPosDir(Point(i, y), dir))
+                                currentCarts.add(CartPosDir(Point(endX, i), dir2))
                             }
 
                             if (lines[i][x] == '\\') {
@@ -140,6 +174,14 @@ class Dec13 {
                                 break
                             }
                         }
+
+                        for (i in x..endX) {
+                            val dir = Direction.of(lines[endY][i])
+                            if (dir != Direction.NONE) {
+                                currentCarts.add(CartPosDir(Point(i, endY), dir))
+                            }
+                        }
+
                         val rect = Rectangle(Point(x, y), Point(endX, endY))
                         state += rect
                         state += currentCarts.map { Cart(it, rect) }
@@ -148,10 +190,21 @@ class Dec13 {
             }
         }
 
+        for (y in 0 until lines.size) {
+            for (x in lines[y].indices) {
+                val point = Point(x, y)
+                val found = state.rectangles.filter { it.onEdge(point) }
+                if (found.size == 2) {
+                    state = state.plus(Intersection(point, found.toSet()))
+                }
+            }
+        }
+
         return state
     }
 
-    private fun isLeftSideOfRectangle(currentLine: String, x: Int) = x == 0 || currentLine[x - 1] != '-'
+    private fun isLeftSideOfRectangle(currentLine: String, x: Int) = x == 0 ||
+            currentLine[x - 1] == ' ' || currentLine[x - 1] == '\\' || currentLine[x - 1] == '|'
 
     data class Point(val x: Int, val y: Int) {
         operator fun plus(p: Point): Point = Point(this.x + p.x, this.y + p.y)
@@ -160,6 +213,11 @@ class Dec13 {
     data class Rectangle(val upLeft: Point, val downRight: Point) {
         fun contains(point: Dec13.Point): Boolean {
             return (point.x >= upLeft.x && point.x <= downRight.x) && (point.y >= upLeft.y && point.y <= downRight.y)
+        }
+
+        fun onEdge(point: Dec13.Point): Boolean {
+            return  (point.x == upLeft.x || point.x == downRight.x) && upLeft.y.rangeTo(downRight.y).contains(point.y) ||
+                    (point.y == upLeft.y || point.y == downRight.y) && upLeft.x.rangeTo(downRight.x).contains(point.x)
         }
     }
 
@@ -183,11 +241,11 @@ class Dec13 {
             return CartPosDir(this.cartPosDir.pos + Point(turnedDir.x, turnedDir.y), turnedDir)
         }
 
-        fun nextIntersection(): CartPosDir {
+        fun nextIntersection(intersecting: Rectangle, oldRectangle: Rectangle): Cart {
             return when (intersected) {
-                0 -> move(Direction.LEFT)
-                1 -> move(Direction.NONE)
-                2 -> move(Direction.RIGHT)
+                0 -> Cart(CartPosDir(this.cartPosDir.pos, this.cartPosDir.dir.left()), intersecting, (this.intersected + 1) % 3)
+                1 -> Cart(this.cartPosDir, oldRectangle, (this.intersected + 1) % 3)
+                2 -> Cart(CartPosDir(this.cartPosDir.pos, this.cartPosDir.dir.right()), intersecting, (this.intersected + 1) % 3)
                 else -> throw IllegalArgumentException()
             }
         }
@@ -211,7 +269,7 @@ class Dec13 {
             val maxY = rectangles.map { it.downRight.y }.max()!!
             val minY = rectangles.map { it.upLeft.y }.min()!!
 
-            val rows = Array<CharArray>(maxY + 1)  { CharArray(maxX + 1) { '.' } }
+            val rows = Array(maxY + 1)  { CharArray(maxX + 1) { '.' } }
 
             rectangles.forEach {
                 rows[it.upLeft.y][it.upLeft.x] = '/'
