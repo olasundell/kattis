@@ -13,9 +13,13 @@ public class YinYangStones {
 		String s = in.nextLine();
 
 		char[] chars = s.toCharArray();
+		int w = 0;
+		int b = 0;
 
 		for (char c: chars) {
+			if (c == 'W') {
 
+			}
 		}
 
 		return "";

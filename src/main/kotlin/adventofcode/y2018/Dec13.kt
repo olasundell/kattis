@@ -69,12 +69,13 @@ class Dec13 {
 
     fun moveCart(cart: Cart, intersections: Set<Intersection> = setOf()): Cart {
         val nP = cart.move()
-        val newCart = if (cart.rectangle.onEdge(nP.pos)) {
+        var newCart = if (cart.rectangle.onEdge(nP.pos)) {
             cart.at(nP)
         } else {
-            val dir: Direction = findNextCartDirection(cart)
-            cart.at(cart.move(dir))
+            cart.at(cart.move(cart.cartPosDir.dir))
         }
+
+        newCart = newCart.to(findNextCartDirection(newCart))
 
         val filter = intersections.filter { it.point == newCart.cartPosDir.pos }
         return if (filter.isNotEmpty()) {
@@ -94,37 +95,41 @@ class Dec13 {
                     Direction.LEFT
                 }
             } else {
-                Direction.NONE
+//                Direction.NONE
+                Direction.UP
             }
 
             Direction.DOWN -> if (cart.isAtBottom()) {
                 if (cart.isLeftmost()) {
-                    Direction.LEFT
-                } else {
                     Direction.RIGHT
+                } else {
+                    Direction.LEFT
                 }
             } else {
-                Direction.NONE
+//                Direction.NONE
+                Direction.DOWN
             }
 
             Direction.LEFT -> if (cart.isLeftmost()) {
                 if (cart.isAtBottom()) {
-                    Direction.RIGHT
+                    Direction.UP
                 } else {
-                    Direction.LEFT
+                    Direction.DOWN
                 }
             } else {
-                Direction.NONE
+//                Direction.NONE
+                Direction.LEFT
             }
 
             Direction.RIGHT -> if (cart.isRightmost()) {
                 if (cart.isAtBottom()) {
-                    Direction.LEFT
+                    Direction.UP
                 } else {
-                    Direction.RIGHT
+                    Direction.DOWN
                 }
             } else {
-                Direction.NONE
+//                Direction.NONE
+                Direction.RIGHT
             }
 
             else -> cart.cartPosDir.dir

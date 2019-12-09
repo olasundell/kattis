@@ -33,9 +33,34 @@ class Dec13Test : AbstractKotlinTest() {
         return result
     }
 
-//    @Test
+    @Test
     fun unitOne() {
         runTest(1, Dec13()::solve)
+    }
+
+    @Test
+    fun unitTwo() {
+        runTest(2, Dec13()::solve)
+    }
+
+    @Test
+    fun unitThree() {
+        runTest(3, Dec13()::solve)
+    }
+
+    @Test
+    fun unitFour() {
+        runTest(4, Dec13()::solve)
+    }
+
+    @Test
+    fun unitFive() {
+        runTest(5, Dec13()::solve)
+    }
+
+    @Test
+    fun unitSix() {
+        runTest(6, Dec13()::solve)
     }
 
     @Test
@@ -61,7 +86,7 @@ class Dec13Test : AbstractKotlinTest() {
 
         val moveCart = move(cart, intersections, 2)
 
-        Assert.assertEquals(CartPosDir(Dec13.Point(1, 2), Direction.DOWN), moveCart.cartPosDir)
+        Assert.assertEquals(CartPosDir(Point(1, 2), Direction.DOWN), moveCart.cartPosDir)
     }
 
     @Test
@@ -70,7 +95,7 @@ class Dec13Test : AbstractKotlinTest() {
 
         val moveCart = move(cart, intersections, 2)
 
-        Assert.assertEquals(CartPosDir(Dec13.Point(2, 1), Direction.RIGHT), moveCart.cartPosDir)
+        Assert.assertEquals(CartPosDir(Point(2, 1), Direction.RIGHT), moveCart.cartPosDir)
     }
 
     @Test
@@ -79,48 +104,52 @@ class Dec13Test : AbstractKotlinTest() {
 
         val moveCart = move(cart, intersections, 2)
 
-        Assert.assertEquals(CartPosDir(Dec13.Point(2, 4), Direction.LEFT), moveCart.cartPosDir)
+        Assert.assertEquals(CartPosDir(Point(2, 4), Direction.LEFT), moveCart.cartPosDir)
     }
 
     @Test
     fun shouldTurnAtIntersections() {
-        val cart = Dec13.Cart(CartPosDir(Dec13.Point(3, 2), Dec13.Direction.DOWN), rectangle)
+        val cart = Cart(CartPosDir(Point(3, 2), Direction.DOWN), rectangle)
 
-        val intersectRect = Dec13.Rectangle(Dec13.Point(2, 3), Dec13.Point(5, 5))
+        val intersectRect = Rectangle(Point(2, 3), Point(5, 5))
 
         val rectangles = setOf(rectangle, intersectRect)
         val intersections1 = setOf(Intersection(Point(3, 3), rectangles), Intersection(Point(2,4), rectangles))
 
         val state = State(rectangles, intersections1, listOf(cart))
 
-        out.println(state.toString())
         val moveCart = move(cart, intersections1, 1)
-//        Assert.assertEquals(CartPosDir(Point(4, 3), Direction.RIGHT), moveCart.cartPosDir)
+
+        Assert.assertEquals(CartPosDir(Point(3, 3), Direction.RIGHT), moveCart.cartPosDir)
+        Assert.assertEquals(intersectRect, moveCart.rectangle)
+
+        val mc2 = move(moveCart, intersections1, 1)
+        Assert.assertEquals(CartPosDir(Point(4, 3), Direction.RIGHT), mc2.cartPosDir)
+        Assert.assertEquals(intersectRect, mc2.rectangle)
     }
 
-//    @Test
-//    fun shouldNotHaveCollision() {
-//        val cart1 = Dec13.Cart(Dec13.Point(3, 3), Dec13.Direction.DOWN)
-//        val cart2 = Dec13.Cart(Dec13.Point(4, 3), Dec13.Direction.DOWN)
-//
-//        val state = Dec13.State(setOf(rectangle), setOf(), listOf(cart1, cart2))
-//
-//        Assert.assertFalse(Dec13().hasCollision(state))
-//    }
-//
-//    @Test
-//    fun shouldHaveCollision() {
-//        val cart1 = Dec13.Cart(Dec13.Point(3, 3), Dec13.Direction.DOWN)
-//        val cart2 = Dec13.Cart(Dec13.Point(3, 3), Dec13.Direction.DOWN)
-//
-//        val state = Dec13.State(setOf(rectangle), setOf(), listOf(cart1, cart2))
-//
-//        Assert.assertTrue(Dec13().hasCollision(state))
-//    }
-//
-//    @Test
-//    fun shouldHaveCorrectStateAt() {
-//        val cart = Dec13.Cart(Dec13.Point(2, 1), Dec13.Direction.RIGHT)
-////        Dec13().stateAt
-//    }
+    @Test
+    fun shouldNotHaveCollision() {
+        val cart1 = Cart(CartPosDir(Point(3, 3), Direction.DOWN), rectangle)
+        val cart2 = Cart(CartPosDir(Point(4, 3), Direction.DOWN), rectangle)
+
+        val state = State(setOf(rectangle), setOf(), listOf(cart1, cart2))
+
+        Assert.assertFalse(Dec13().hasCollision(state))
+    }
+
+    @Test
+    fun shouldHaveCollision() {
+        val cart1 = Cart(CartPosDir(Point(3, 3), Direction.DOWN), rectangle)
+        val cart2 = Cart(CartPosDir(Point(3, 3), Direction.DOWN), rectangle)
+
+        val state = State(setOf(rectangle), setOf(), listOf(cart1, cart2))
+
+        Assert.assertTrue(Dec13().hasCollision(state))
+    }
+
+    @Test
+    fun shouldHaveCollisionAfterMove() {
+
+    }
 }
