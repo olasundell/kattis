@@ -1,7 +1,7 @@
+import kattis.OwlAndFox
 import org.junit.Assert
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
 import org.junit.Test
 
 /**

@@ -1,5 +1,5 @@
+import kattis.Prerequisites
 import org.junit.Assert
-import org.junit.Assert.*
 import org.junit.Test
 import util.AbstractKotlinTest
 

@@ -1,10 +1,9 @@
-import org.junit.Assert
+import kattis.CountingStars
 import util.AbstractKotlinTest
 
 import org.junit.Assert.*
 import org.junit.Test
-import CountingStars.*
-import kotlin.test.assertTrue
+import kattis.CountingStars.*
 
 /**
  * TODO write documentation

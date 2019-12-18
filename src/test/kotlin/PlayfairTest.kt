@@ -1,3 +1,4 @@
+import kattis.Playfair
 import org.junit.Assert
 import util.AbstractKotlinTest
 

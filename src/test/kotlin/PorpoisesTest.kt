@@ -1,3 +1,4 @@
+import kattis.Porpoises
 import org.junit.Assert
 import org.junit.Test
 import util.AbstractKotlinTest
@@ -18,9 +19,9 @@ class PorpoisesTest: AbstractKotlinTest() {
 //        for (i in 61..100) {
 //            println("$i ${p.calcAt(i.toLong())}")
 //        }
-//        Assert.assertEquals(1, Porpoises().calcAt(2))
-//        Assert.assertEquals(21, Porpoises().calcAt(8))
-//        Assert.assertEquals(0, Porpoises().calcAt(4500))
+//        Assert.assertEquals(1, kattis.Porpoises().calcAt(2))
+//        Assert.assertEquals(21, kattis.Porpoises().calcAt(8))
+//        Assert.assertEquals(0, kattis.Porpoises().calcAt(4500))
         Assert.assertEquals(836311903, Porpoises().calcAt(46))
     }
 

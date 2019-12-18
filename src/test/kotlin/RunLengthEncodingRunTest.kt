@@ -1,6 +1,6 @@
+import kattis.RunLengthEncodingRun
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
 import org.junit.Test
 
 /**

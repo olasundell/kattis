@@ -1,6 +1,6 @@
+import kattis.IsItHalloween
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
 import org.junit.Test
 
 class IsItHalloweenTest : AbstractKotlinTest() {

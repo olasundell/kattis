@@ -1,4 +1,4 @@
-import org.junit.Assert.*
+import kattis.JudgingMoose
 import org.junit.Test
 import util.AbstractKotlinTest
 

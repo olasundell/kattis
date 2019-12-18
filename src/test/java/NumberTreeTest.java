@@ -32,7 +32,7 @@ public class NumberTreeTest extends AbstractTest {
 
 //	@Test
 //	public void createSimpleTreeShouldWork() {
-//		NumberTree.Node node = numberTree.createTree(1);
+//		NumberTree.kattis.Node node = numberTree.createTree(1);
 //
 //		Assert.assertNotNull(node);
 //		Assert.assertNotNull(node.left);
@@ -42,7 +42,7 @@ public class NumberTreeTest extends AbstractTest {
 //
 //	@Test
 //	public void createMoreComplexTreeShouldWork() {
-//		NumberTree.Node node = numberTree.createTree(3);
+//		NumberTree.kattis.Node node = numberTree.createTree(3);
 //
 //		Assert.assertNotNull(node);
 //		Assert.assertNotNull(node.left);
@@ -56,7 +56,7 @@ public class NumberTreeTest extends AbstractTest {
 //
 //	@Test
 //	public void shouldCreateGiantTree() {
-//		NumberTree.Node tree = numberTree.createTree(30);
+//		NumberTree.kattis.Node tree = numberTree.createTree(30);
 //	}
 
 	@Override

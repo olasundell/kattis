@@ -1,3 +1,4 @@
+import kattis.Planina
 import org.junit.Test
 import util.AbstractKotlinTest
 

@@ -1,3 +1,4 @@
+import kattis.Carousel
 import org.junit.Test
 import util.AbstractKotlinTest
 

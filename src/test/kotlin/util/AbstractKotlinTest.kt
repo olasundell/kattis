@@ -2,10 +2,7 @@ package util
 
 import org.junit.Assert
 import util.AbstractTest.DIR
-import java.io.File
-import java.io.FileReader
-import java.io.StreamTokenizer
-import java.io.StringReader
+import java.io.*
 import java.net.URL
 import java.util.*
 import kotlin.jvm.internal.FunctionReference
@@ -20,6 +17,13 @@ abstract class AbstractKotlinTest {
         val result = f(buildScanner("$prefix$i.in"))
         val expected = readFile("$prefix$i.ans").trim()
         Assert.assertEquals(expected, result)
+    }
+
+    fun <T> readFile(i: Int, javaClass: Class<T>): String {
+        val prefix = prefix(javaClass)
+        val s = "$prefix$i.in"
+        val resource = this::class.java.getResource(s)
+        return resource.readText()
     }
 
     private fun <T> prefix(javaClass: Class<T>): String {
@@ -40,16 +44,20 @@ abstract class AbstractKotlinTest {
     }
 
     private fun buildStreamTokenizer(s: String): StreamTokenizer {
+        return StreamTokenizer(buildReader(s))
+    }
+
+    private fun buildReader(s: String): Reader {
         val dir = getDir()
         val s1 = DIR + dir + s
         val file = File(s1)
 
-        if (file.exists()) {
-            return StreamTokenizer(FileReader(file));
+        return if (file.exists()) {
+            FileReader(file)
         } else {
             val resource = this::class.java.getResource(dir + s)
             val text = resource.readText()
-            return StreamTokenizer(StringReader(text))
+            StringReader(text)
         }
     }
 

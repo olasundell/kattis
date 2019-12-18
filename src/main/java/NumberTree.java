@@ -26,7 +26,7 @@ public class NumberTree {
 //		if index(parent) = N, index(left child) = 2*N+1
 //				* if index(parent) = N, index(right child) = 2*N+2
 
-//		Node tree = createTree(height);
+//		kattis.Node tree = createTree(height);
 
 		for (char c: path) {
 			switch (c) {

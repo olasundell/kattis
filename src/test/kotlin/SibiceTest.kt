@@ -1,3 +1,4 @@
+import kattis.Sibice
 import org.junit.Test
 import util.AbstractKotlinTest
 

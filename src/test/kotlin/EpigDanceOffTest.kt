@@ -1,7 +1,7 @@
+import kattis.EpigDanceOff
 import util.AbstractKotlinTest
 
 import org.junit.Test
-import java.io.File
 
 /**
  * TODO write documentation

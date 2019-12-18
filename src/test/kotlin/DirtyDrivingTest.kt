@@ -1,6 +1,6 @@
+import kattis.DirtyDriving
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
 import org.junit.Test
 
 class DirtyDrivingTest : AbstractKotlinTest() {

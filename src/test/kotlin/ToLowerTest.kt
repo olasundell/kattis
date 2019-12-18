@@ -1,3 +1,4 @@
+import kattis.ToLower
 import org.junit.Test
 import util.AbstractKotlinTest
 

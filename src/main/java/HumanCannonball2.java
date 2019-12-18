@@ -58,7 +58,7 @@ public class HumanCannonball2 {
 
 		@Override
 		public String toString() {
-			return "State{" +
+			return "kattis.State{" +
 					"velocity=" + velocity +
 					", angle=" + angle +
 					", distanceToWall=" + distanceToWall +

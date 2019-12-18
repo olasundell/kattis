@@ -1,3 +1,4 @@
+import kattis.ScrollingSign
 import org.junit.Assert
 import util.AbstractKotlinTest
 

@@ -1,6 +1,6 @@
+import kattis.ConquestCampaign
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
 import org.junit.Test
 import java.io.File
 

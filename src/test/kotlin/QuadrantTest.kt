@@ -1,3 +1,4 @@
+import kattis.Quadrant
 import org.junit.Test
 import util.AbstractKotlinTest
 

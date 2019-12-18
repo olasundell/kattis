@@ -1,6 +1,6 @@
+import kattis.ShatteredCake
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
 import org.junit.Test
 
 class ShatteredCakeTest : AbstractKotlinTest() {

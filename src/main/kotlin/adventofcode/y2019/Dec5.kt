@@ -1,5 +1,7 @@
 package adventofcode.y2019;
 
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.runBlocking
 import java.lang.System.err
 import java.util.Scanner;
 import kotlin.IllegalStateException
@@ -8,13 +10,18 @@ import kotlin.IllegalStateException
  * TODO write documentation
  */
 class Dec5 {
+//    val memStates: MutableList<Map<Long, Long>> = mutableListOf()
+
     fun solve(scanner: Scanner): String {
-        val memory = scanner.nextLine().split(",").map { it.toInt() }
+        val memory = scanner.nextLine().split(",").map { it.toLong() }
 
-        val memory1 = memory.toMutableList()
-        val output = runProgram(memory1, listOf(5))
+        var output: String = "-1"
+        runBlocking {
+            output = runProgram(memory, listOf(5))
+        }
 
-        return output.joinToString(separator = "\n")
+//        return output.joinToString(separator = "\n")
+        return output
     }
 
     fun tryValues(memory: List<Int>, one: Int, two: Int): Int {
@@ -25,161 +32,147 @@ class Dec5 {
         return -1
     }
 
+    suspend fun runProgram(memory: List<Long>, input: List<Int>): String {
+        val output = Channel<Long>(capacity = Int.MAX_VALUE)
+        val inputC = Channel<Long>(capacity = Int.MAX_VALUE)
+        var state = State("", memory, Ip(0, 0), inputC, output, true)
 
-    fun runProgram(memory: MutableList<Int>, input: List<Int>): List<Int> {
-        var state = State(memory, 0, listOf(), input)
+        input.forEach { inputC.offer(it.toLong()) }
+//        memStates.add(state.memory)
 
         while (state.running) {
             state = state.execute()
+//            memStates.add(state.memory)
         }
+        var n: Long?
+        val list = mutableListOf<Long>()
+        do {
+            n = state.output.poll()
+            if (n == null) {
+                break
+            } else {
+                list.add(n)
+            }
+        }  while (true)
 
-        return state.output
+//        return state.output.poll() ?: 0
+        return list.map{ it.toString()}.joinToString(separator = ",")
     }
 
     class State(
-            private val memory: List<Int>,
-            private val ip: Int,
-            val output: List<Int>,
-            private val input: List<Int>,
-            val running: Boolean = true
+            private val name: String,
+            val memory: Map<Long, Long>,
+            private val ip: Ip,
+            private val input: Channel<Long>,
+            val output: Channel<Long>,
+            val running: Boolean
     ) {
-        private val opcode: Int = memory[ip]
-        private val immPos = ImmPos(opcode)
+        constructor (
+                name: String,
+                memory: List<Long>,
+                ip: Ip,
+                input: Channel<Long>,
+                output: Channel<Long>,
+                running: Boolean
+        ): this(name, memory.mapIndexed { idx, i -> idx.toLong() to i }.toMap(), ip, input, output, running)
 
-        fun execute(): State {
-            err.println("instruction: $opcode ip: $ip")
-            err.println("memory: [${memory.joinToString()}]")
-            return when (opcode % 100) {
-                1 -> add()
-                2 -> mul()
-                3 -> store()
-                4 -> output()
-                5 -> je()
-                6 -> jne()
-                7 -> lessThan()
-                8 -> eq()
-                99 -> stop()
+        private val opcode: Long = memory[ip.ip]!!
+        private val immPos = ParamMode(opcode)
+
+        suspend fun execute(): State {
+//            err.println("$name instruction: $opcode ip: $ip ${first()} ${second()} ${third()}")
+            val state = when ((opcode % 100).toInt()) {
+                1 -> withValue(pointer(3), first() + second()).incIp(4)
+                2 -> withValue(pointer(3), first() * second()).incIp(4)
+//                3 -> withValue(memory[ip + 1]!!, input.receive()).incIp(2)
+                3 -> withValue(pointer(1), input.receive()).incIp(2)
+                4 -> {
+                    output.send(first())
+                    incIp(2)
+                }
+                5 -> if (first() != 0L) setIp(second()) else incIp(3)
+                6 -> if (first() == 0L) setIp(second()) else incIp(3)
+                7 -> withValue(pointer(3), if (first() < second()) 1 else 0).incIp(4)
+                8 -> withValue(pointer(3), if (first() == second()) 1 else  0).incIp(4)
+                9 -> adjustBase(first()).incIp(2)
+                99 -> State(name, memory, ip, input, output, running = false)
                 else -> throw IllegalStateException("error at $ip, opcode $opcode")
             }
+
+//            err.println("memory: [${state.memory.joinToString()}]")
+
+            return state
         }
 
-        private fun stop(): State {
-            return State(memory, ip, output, running = false, input = input)
-        }
+        private fun adjustBase(delta: Long): State = State(name, memory, Ip(ip.ip, ip.relBase + delta), input, output, running)
+        fun setIp(newIp: Long): State = State(name, memory, Ip(newIp, ip.relBase), input, output, running)
+        fun incIp(increment: Long): State = setIp(ip + increment)
 
-        private fun withValue(idx: Int, value: Int): State {
-            val mem = memory.toMutableList()
+        private fun withValue(idx: Long, value: Long): State {
+            val mem = memory.toMutableMap()
             mem[idx] = value
-            return State(mem, ip, output, input, running)
+            return State(name, mem, ip, input, output, running)
         }
 
-        fun setIp(ip: Int): State {
-            return State(memory, ip, output, input, running)
-        }
+        private fun first(): Long = memAt(immPos.first, ip + 1)
+        private fun second(): Long = memAt(immPos.second, ip + 2)
+        private fun third(): Long = memAt(immPos.third, ip + 3)
 
-        fun incIp(increment: Int): State {
-            return setIp(ip + increment)
-        }
+        private fun memAt(mode: Mode, at: Long): Long = memory[pointer(mode, at)] ?: 0
+        private fun pointer(i: Int): Long = pointer(immPos[i], ip + i)
 
-        fun withInput(inp: List<Int>): State {
-            return State(memory, ip, output, inp, running)
-        }
-
-        /*
-         * Opcode 8 is equals: if the first parameter is equal to the second parameter, it stores 1 in the position given by the third parameter.
-         * Otherwise, it stores 0.
-         */
-        private fun eq(): State {
-            return withValue(memory[ip + 3], if (first() == second()) 1 else  0).incIp(4)
-        }
-
-        /**
-         * Opcode 7 is less than: if the first parameter is less than the second parameter, it stores 1 in the position given by the third parameter.
-         * Otherwise, it stores 0.
-         */
-
-        private fun lessThan(): State = withValue(memory[ip + 3], if (first() < second()) 1 else 0).incIp(4)
-
-        /**
-         * Opcode 6 is jump-if-false: if the first parameter is zero, it sets the instruction pointer to the value from the second parameter.
-         * Otherwise, it does nothing.
-         */
-
-        private fun jne(): State {
-            return if (first() == 0) {
-                setIp(second())
-            } else {
-                incIp(3)
+        private fun pointer(mode: Mode, at: Long): Long =
+            when (mode) {
+                Mode.POSITION -> memory[at] ?: 0L
+                Mode.IMMEDIATE -> at
+                Mode.RELATIVE -> (memory[at] ?: 0).plus(ip.relBase)
             }
-        }
 
-        /**
-         * Opcode 5 is jump-if-true: if the first parameter is non-zero, it sets the instruction pointer to the value from the second parameter.
-         * Otherwise, it does nothing.
-         */
-        private fun je(): State {
-            return if (first() != 0) {
-                setIp(second())
-            } else {
-                incIp(3)
-            }
-        }
-
-        private fun add(): State {
-            val val1 = first()
-            val val2 = second()
-            val dest = memory[ip + 3]
-
-            return this.withValue(dest, val1 + val2).incIp(4)
-        }
-
-        fun mul(): State {
-            val val1 = first()
-            val val2 = second()
-            val dest = memory[ip + 3]
-
-            return this.withValue(dest, val1 * val2).incIp(4)
-        }
-
-        // only runs once with 1 as input
-        fun store(): State {
-            if (input.isEmpty()) {
-                throw IllegalStateException("Asked for input when there was none")
-            }
-            return withValue(memory[ip + 1], input.first()).incIp(2).withInput(input.subList(1, input.size))
-        }
-
-        fun output(): State {
-            val o = output.plus(first())
-
-            return State(memory, ip + 2, o, input)
-        }
-
-        private fun first(): Int {
-            return memAt(immPos.first, ip + 1)
-        }
-
-        private fun second(): Int {
-            return memAt(immPos.second, ip + 2)
-        }
-
-        private fun third(): Int {
-            return memAt(immPos.third, ip + 3)
-        }
-
-        private fun memAt(immediate: Boolean, at: Int): Int {
-            return if (immediate) memory[at] else memory[memory[at]]
-        }
     }
 
-    class ImmPos(opcode: Int) {
-        val first = (opcode / 100 % 10 != 0)
-        val second = (opcode / 1_000 % 10 != 0)
-        val third = (opcode / 10_000 % 10 != 0)
+    data class Ip(val ip: Long, val relBase: Long) {
+        operator fun plus(delta: Int): Long = ip + delta
+        operator fun plus(delta: Long): Long = ip + delta
+    }
+
+    class ParamMode(opcode: Long) {
+//        this[ip] % 1000 / 100
+//        this[ip] % 10000 / 1000
+//        this[ip] / 10000
+//        val first = Mode.from((opcode / 100L) % 10L)
+//        val second = Mode.from((opcode / 1_000L) % 10L)
+//        val third = Mode.from((opcode / 10_000L) % 10L)
+        val first = Mode.from(opcode % 1_000 / 100)
+        val second = Mode.from(opcode % 10_000 / 1_000)
+        val third = Mode.from(opcode / 10_000)
+        operator fun get(i: Int): Mode =
+                when(i) {
+                    1 -> first
+                    2 -> second
+                    3 -> third
+                    else -> throw IllegalArgumentException("$i is invalid")
+                }
+    }
+
+    enum class Mode {
+        POSITION,
+        IMMEDIATE,
+        RELATIVE;
+
+        companion object {
+            fun from(p: Long): Mode {
+                return when (p) {
+                    0L -> POSITION
+                    1L -> IMMEDIATE
+                    2L -> RELATIVE
+                    else -> throw IllegalArgumentException("$p is invalid")
+                }
+            }
+        }
     }
 }
 
 fun main(args: Array<String>) {
     val scanner = Scanner(System.`in`)
-    System.out.println(Dec2().solve(scanner))
+    System.out.println(Dec5().solve(scanner))
 }

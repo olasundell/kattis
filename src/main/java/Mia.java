@@ -39,7 +39,7 @@ public class Mia {
 					playerWon = 2;
 				}
 
-				results.add("Player " + playerWon + " wins.");
+				results.add("kattis.Player " + playerWon + " wins.");
 			}
 		}
 

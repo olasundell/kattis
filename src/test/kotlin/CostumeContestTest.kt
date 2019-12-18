@@ -1,6 +1,6 @@
+import kattis.CostumeContest
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
 import org.junit.Test
 
 class CostumeContestTest : AbstractKotlinTest() {

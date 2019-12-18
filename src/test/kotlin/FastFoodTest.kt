@@ -1,4 +1,4 @@
-import org.junit.Assert.*
+import kattis.FastFood
 import org.junit.Test
 import util.AbstractKotlinTest
 

@@ -1,7 +1,6 @@
-import org.junit.Assert
+import kattis.HeirsDilemma
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
 import org.junit.Test
 
 /**

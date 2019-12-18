@@ -1,5 +1,6 @@
 package adventofcode.y2019
 
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import util.AbstractKotlinTest
 
@@ -10,6 +11,16 @@ import org.junit.Test
  * TODO write documentation
  */
 class Dec5Test : AbstractKotlinTest() {
+    @Test
+    fun block() {
+        var i = -1
+        runBlocking {
+            i = 0
+        }
+
+        assertEquals(0, i)
+    }
+
     @Test
     fun one() {
         runTest(1, Dec5()::solve)
@@ -62,9 +73,9 @@ class Dec5Test : AbstractKotlinTest() {
 
     @Test
     fun immPos() {
-        val result = Dec5.ImmPos(1002)
-        Assert.assertFalse(result.first)
-        Assert.assertTrue(result.second)
-        Assert.assertFalse(result.third)
+        val result = Dec5.ParamMode(21002)
+        Assert.assertEquals(Dec5.Mode.POSITION, result.first)
+        Assert.assertEquals(Dec5.Mode.IMMEDIATE, result.second)
+        Assert.assertEquals(Dec5.Mode.RELATIVE, result.third)
     }
 }

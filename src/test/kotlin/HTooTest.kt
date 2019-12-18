@@ -1,4 +1,4 @@
-import org.junit.Assert
+import kattis.HToo
 import util.AbstractKotlinTest
 
 import org.junit.Assert.*

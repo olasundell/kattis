@@ -1,6 +1,6 @@
+import kattis.Chanukah
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
 import org.junit.Test
 
 /**

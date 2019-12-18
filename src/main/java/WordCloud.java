@@ -123,7 +123,7 @@ public class WordCloud {
 
 		@Override
 		public String toString() {
-			return "Word{" +
+			return "kattis.Word{" +
 					"word='" + word + '\'' +
 					", count=" + count +
 					'}';
