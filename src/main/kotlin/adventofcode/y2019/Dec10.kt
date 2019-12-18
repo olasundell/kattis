@@ -31,25 +31,18 @@ class Dec10 {
         }
 
         val map = mutableMapOf<Point, Int>()
-//        val kMap = mutableMapOf<Pair<Point, Point>, Double>()
-//        val kMap = mutableMapOf<Point, MutableSet<Pair<Point, Double>>>()
 
-        for (p in points) {
-            val others = points.toSet() - p
+        for (origin in points) {
+            val others = points.toSet() - origin
             val currentDirs = mutableSetOf<Direction>()
             val currentRevKMap = mutableMapOf<Direction, MutableSet<Point>>()
             for (p2 in others) {
-                // (y - m) / x = k
-                val direction = direction(p2, p)
+                val direction = Direction(origin = origin, p = p2)
                 currentDirs.add(direction)
                 currentRevKMap.getOrPut(direction) { mutableSetOf() }.add(p2)
-//                kMap.putIfAbsent(p, mutableSetOf())
-//                kMap[p]!!.add(p2 to k)
-//                kMap[p2 to p] = k
-//                revKMap.getOrPut(k) { mutableSetOf() }.add(p2 to p)
             }
-            map[p] = currentDirs.size
-            revKMap[p] = currentRevKMap
+            map[origin] = currentDirs.size
+            revKMap[origin] = currentRevKMap
         }
 
         val sorted = map.entries.sortedByDescending { it.value }
@@ -59,21 +52,39 @@ class Dec10 {
         return "${first.key.x},${first.key.y},${first.value}"
     }
 
-    fun direction(p2: Point, p: Point): Direction {
-        val k = (p2.y - p.y).toDouble() / (p2.x - p.x).toDouble()
-        return Direction(k, p.x > p2.x)
+    fun direction(p: Point, origin: Point): Direction {
+        return Direction(origin, p)
     }
 
-    data class Direction(val k: Double, val left: Boolean) : Comparable<Direction> {
-        override fun compareTo(other: Direction): Int {
-            return if (other.left && !this.left) {
-                1
-            } else if (this.left && !other.left){
-                -1
-            } else {
-                -other.k.compareTo(this.k)
+    data class Direction(private val origin: Point, val p: Point) : Comparable<Direction> {
+        val k = (p.y - origin.y).toDouble() / (p.x - origin.x).toDouble()
+        fun isLeft(): Boolean = p.x < origin.x
+
+        override fun equals(other: Any?): Boolean {
+            if (other == null || other !is Direction) {
+                return false
             }
+            if (other.k != this.k) {
+                return false
+            }
+            if (this.isLeft() && other.isLeft()) {
+                return true
+            }
+            if (!this.isLeft() && !other.isLeft()){
+                return true
+            }
+
+            return false
         }
+
+        override fun compareTo(other: Direction): Int =
+                when {
+                    // other is left of origin and this is right
+                    other.isLeft() && !isLeft() -> -1
+                    // other is right of origin and this is left
+                    isLeft() && !other.isLeft() -> 1
+                    else -> -other.k.compareTo(this.k)
+                }
     }
 }
 
