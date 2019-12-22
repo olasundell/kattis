@@ -15,6 +15,7 @@ class Dec10DirectionTest : AbstractKotlinTest() {
     private val origin = Point(5,5)
 
     val up = Point(5,1)
+    val upButFurther = Point(5,0)
     val upRight = Point(7, 2)
     val upLeft = Point(3,3)
     val left = Point(2, 5)
@@ -23,7 +24,7 @@ class Dec10DirectionTest : AbstractKotlinTest() {
     val downRight = Point(8,8)
     val downLeft = Point(2,7)
 
-    val map = listOf(downLeft, downRight, down, left, right, upLeft, upRight, up).map { it to Dec10.Direction(origin, it) }.toMap()
+    val map = listOf(downLeft, downRight, down, left, right, upLeft, upRight, up, upButFurther).map { it to Dec10.Direction(origin, it) }.toMap()
     val sorted = map.values.sorted()
 
     @Test
@@ -45,13 +46,28 @@ class Dec10DirectionTest : AbstractKotlinTest() {
     @Test
     fun `direction should compare properly`() {
 
-        val correctList = listOf(up, upRight, right, downRight, down, downLeft, left, upLeft).map { map[it]!! }
+        val correctList = listOf(up, upButFurther, upRight, right, downRight, down, downLeft, left, upLeft).map { map[it]!! }
 
+//        assertEquals(correctList, sorted)
         assertEquals(correctList.map { it.p }, sorted.map { it.p })
     }
 
     @Test
     fun `should behave properly when put in a set`() {
         val set = setOf(Dec10.Direction(origin, Point(6, 6)), Dec10.Direction(origin, Point(7, 7)))
+    }
+
+    data class DirectionQ(val k: Double, val left: Boolean) : Comparable<DirectionQ> {
+        constructor(origin: Point, p: Point) : this(
+                (p.y - origin.y).toDouble() / (p.x - origin.x).toDouble(),
+                origin.x > p.x
+        )
+
+        override fun compareTo(other: DirectionQ): Int =
+                when {
+                    other.left && !this.left -> 1
+                    this.left && !other.left -> -1
+                    else -> -other.k.compareTo(this.k)
+                }
     }
 }
