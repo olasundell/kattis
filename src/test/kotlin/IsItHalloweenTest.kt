@@ -1,7 +1,7 @@
 import kattis.IsItHalloween
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class IsItHalloweenTest : AbstractKotlinTest() {
     @Test

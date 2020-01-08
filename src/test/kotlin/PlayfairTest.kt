@@ -1,8 +1,8 @@
 import kattis.Playfair
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 /**
  * TODO write documentation
@@ -27,12 +27,12 @@ class PlayfairTest : AbstractKotlinTest() {
         val pf = Playfair()
 
         val result = pf.encryptTwo('C', 'H', matrix)
-        Assert.assertEquals("DB", result)
+        Assertions.assertEquals("DB", result)
 
         val result2 = pf.encryptTwo('V', 'A', matrix)
-        Assert.assertEquals("AE", result2)
+        Assertions.assertEquals("AE", result2)
 
         val result3 = pf.encryptTwo('K', 'M', matrix)
-        Assert.assertEquals("SR", result3)
+        Assertions.assertEquals("SR", result3)
     }
 }

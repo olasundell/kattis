@@ -1,5 +1,5 @@
 import kattis.PigLatin
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import util.AbstractKotlinTest
 
 /**

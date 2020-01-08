@@ -1,9 +1,10 @@
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
 import java.util.PriorityQueue;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * TODO write documentation
@@ -26,7 +27,7 @@ public class BusyScheduleTest extends AbstractTest {
 		queue.add(e1);
 		queue.add(e2);
 
-		Assert.assertEquals(e, queue.peek());
+		assertEquals(e, queue.peek());
 	}
 
 	@Override

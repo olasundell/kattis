@@ -1,6 +1,6 @@
 package util
 
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions
 import util.AbstractTest.DIR
 import java.io.*
 import java.net.URL
@@ -16,7 +16,7 @@ abstract class AbstractKotlinTest {
         val prefix = prefix((f as FunctionReference).boundReceiver.javaClass)
         val result = f(buildScanner("$prefix$i.in"))
         val expected = readFile("$prefix$i.ans").trim()
-        Assert.assertEquals(expected, result)
+        Assertions.assertEquals(expected, result)
     }
 
     fun <T> readFile(i: Int, javaClass: Class<T>): String {
@@ -40,7 +40,7 @@ abstract class AbstractKotlinTest {
     fun runTestTokenizer(i: Int, f: (StreamTokenizer) -> String) {
         val result = f(buildStreamTokenizer("$i.in"))
         val expected = readFile("$i.ans").trim()
-        Assert.assertEquals(expected, result)
+        Assertions.assertEquals(expected, result)
     }
 
     private fun buildStreamTokenizer(s: String): StreamTokenizer {

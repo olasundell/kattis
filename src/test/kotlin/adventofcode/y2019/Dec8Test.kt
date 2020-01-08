@@ -1,9 +1,9 @@
 package adventofcode.y2019
 
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import kotlin.test.assertNotNull
 
 /**
@@ -17,7 +17,7 @@ class Dec8Test : AbstractKotlinTest() {
         val chunks = input.chunked(25 * 6)
         val sorted = chunks.sortedBy { it.count { i -> i == 0 } }
         val list = sorted[0]
-        Assert.assertEquals(-1, list.count { it == 1 } * list.count { it == 2 })
+        Assertions.assertEquals(-1, list.count { it == 1 } * list.count { it == 2 })
     }
 
     @Test

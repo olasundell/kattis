@@ -2,11 +2,12 @@ package adventofcode.y2019
 
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import java.awt.Point
 import java.awt.geom.Point2D.distance
 import java.lang.System.err
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
@@ -89,23 +90,23 @@ class Dec10Test : AbstractKotlinTest() {
         runTest(6, dec10::solve)
 
         val result: List<Point> = vaporise(dec10)
-        assertEquals("0", Point(11,12), result[0])
-        assertEquals("1", Point(12, 1), result[1])
-        assertEquals("2", Point(12, 2), result[2])
-        assertEquals("9", Point(12, 8), result[9])
+        assertEquals(Point(11,12), result[0], "0")
+        assertEquals(Point(12, 1), result[1], "1")
+        assertEquals(Point(12, 2), result[2], "2")
+        assertEquals(Point(12, 8), result[9], "9")
 //        The 20th asteroid to be vaporized is at 16,0.
-        assertEquals("19", Point(16, 0), result[19])
+        assertEquals(Point(16, 0), result[19], "19")
 //        The 50th asteroid to be vaporized is at 16,9.
-        assertEquals("49", Point(16, 9), result[49])
+        assertEquals(Point(16, 9), result[49], "49")
 //        The 100th asteroid to be vaporized is at 10,16.
-        assertEquals("99", Point(10, 16), result[99])
+        assertEquals(Point(10, 16), result[99], "99")
 //        The 199th asteroid to be vaporized is at 9,6.
-        assertEquals("198", Point(9, 6), result[198])
+        assertEquals(Point(9, 6), result[198], "198")
 //        The 200th asteroid to be vaporized is at 8,2.
-        assertEquals("199", Point(8, 2), result[199])
+        assertEquals(Point(8, 2), result[199], "199")
 //        The 201st asteroid to be vaporized is at 10,9.
-        assertEquals("200", Point(10, 9), result[200])
+        assertEquals(Point(10, 9), result[200], "200")
 //        The 299th and final asteroid to be vaporized is at 11,1.
-        assertEquals("298", Point(11, 1), result[298])
+        assertEquals(Point(11, 1), result[298], "298")
     }
 }

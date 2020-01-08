@@ -1,7 +1,7 @@
 import kattis.CostumeContest
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class CostumeContestTest : AbstractKotlinTest() {
     @Test

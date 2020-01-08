@@ -1,9 +1,9 @@
 package adventofcode.y2019
 
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions.*
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 /**
  * TODO write documentation
@@ -23,63 +23,63 @@ class Dec4Test : AbstractKotlinTest() {
 
     @Test
     fun threeEqualityShouldWork() {
-        Assert.assertEquals(2, dec4.findStrictThreeInARow("123334"))
-        Assert.assertEquals(-1, dec4.findStrictThreeInARow("123333"))
+        assertEquals(2, dec4.findStrictThreeInARow("123334"))
+        assertEquals(-1, dec4.findStrictThreeInARow("123333"))
 
-        Assert.assertEquals(0, dec4.findStrictThreeInARow("333456"))
-        Assert.assertEquals(-1, dec4.findStrictThreeInARow("333345"))
+        assertEquals(0, dec4.findStrictThreeInARow("333456"))
+        assertEquals(-1, dec4.findStrictThreeInARow("333345"))
 
-        Assert.assertEquals(3, dec4.findStrictThreeInARow("123444"))
-        Assert.assertEquals(-1, dec4.findStrictThreeInARow("124444"))
+        assertEquals(3, dec4.findStrictThreeInARow("123444"))
+        assertEquals(-1, dec4.findStrictThreeInARow("124444"))
     }
 
     @Test
     fun threeButNotTwo() {
-        Assert.assertTrue(dec4.hasThreeInARowButNotTwoInRemainder("555678"))
-        Assert.assertTrue(dec4.hasThreeInARowButNotTwoInRemainder("155567"))
-        Assert.assertTrue(dec4.hasThreeInARowButNotTwoInRemainder("125556"))
-        Assert.assertTrue(dec4.hasThreeInARowButNotTwoInRemainder("123555"))
+        assertTrue(dec4.hasThreeInARowButNotTwoInRemainder("555678"))
+        assertTrue(dec4.hasThreeInARowButNotTwoInRemainder("155567"))
+        assertTrue(dec4.hasThreeInARowButNotTwoInRemainder("125556"))
+        assertTrue(dec4.hasThreeInARowButNotTwoInRemainder("123555"))
     }
 
     @Test
     fun strictThreeTwoTimes() {
-        Assert.assertTrue(dec4.hasThreeInARowButNotTwoInRemainder("444555"))
+        assertTrue(dec4.hasThreeInARowButNotTwoInRemainder("444555"))
     }
 
     @Test
     fun threeAndTwoButNoDoubleThree() {
-        Assert.assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("555668"))
-        Assert.assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("555677"))
-        Assert.assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("155566"))
-        Assert.assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("225556"))
-        Assert.assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("223555"))
-        Assert.assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("233555"))
+        assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("555668"))
+        assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("555677"))
+        assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("155566"))
+        assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("225556"))
+        assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("223555"))
+        assertFalse(dec4.hasThreeInARowButNotTwoInRemainder("233555"))
     }
 
     @Test
     fun sixInARow() {
-        Assert.assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("111111"))
+        assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("111111"))
     }
 
     @Test
     fun oneTwoThreeDouble() {
-        Assert.assertFalse(dec4.hasThreeOrMoreInARowAndNoTwo("112233"))
+        assertFalse(dec4.hasThreeOrMoreInARowAndNoTwo("112233"))
     }
 
     @Test
     fun fiveInARow() {
-        Assert.assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("122222"))
-        Assert.assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("222223"))
+        assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("122222"))
+        assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("222223"))
     }
 
     @Test
     fun fourInARow() {
-        Assert.assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("123333"))
-        Assert.assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("222234"))
-        Assert.assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("122223"))
+        assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("123333"))
+        assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("222234"))
+        assertTrue(dec4.hasThreeOrMoreInARowAndNoTwo("122223"))
 
-        Assert.assertFalse(dec4.hasThreeOrMoreInARowAndNoTwo("112222"))
-        Assert.assertFalse(dec4.hasThreeOrMoreInARowAndNoTwo("222233"))
+        assertFalse(dec4.hasThreeOrMoreInARowAndNoTwo("112222"))
+        assertFalse(dec4.hasThreeOrMoreInARowAndNoTwo("222233"))
     }
 
     @Test
@@ -88,6 +88,6 @@ class Dec4Test : AbstractKotlinTest() {
         val r56 = """(\d)\1{5,6}""".toRegex()
         val find = r4.find("111123")
 
-        Assert.assertNotNull(find)
+        assertNotNull(find)
     }
 }

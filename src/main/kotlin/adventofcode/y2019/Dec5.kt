@@ -35,9 +35,14 @@ class Dec5 {
     suspend fun runProgram(memory: List<Long>, input: List<Int>): String {
         val output = Channel<Long>(capacity = Int.MAX_VALUE)
         val inputC = Channel<Long>(capacity = Int.MAX_VALUE)
-        var state = State("", memory, Ip(0, 0), inputC, output, true)
-
         input.forEach { inputC.offer(it.toLong()) }
+
+        return runProgram(memory, output, inputC)
+    }
+
+    suspend fun runProgram(memory: List<Long>, output: Channel<Long>, input: Channel<Long>): String {
+        var state = State("", memory, Ip(0, 0), input, output, true)
+
 //        memStates.add(state.memory)
 
         while (state.running) {
@@ -56,7 +61,7 @@ class Dec5 {
         }  while (true)
 
 //        return state.output.poll() ?: 0
-        return list.map{ it.toString()}.joinToString(separator = ",")
+        return list.joinToString(separator = ",") { it.toString() }
     }
 
     class State(

@@ -1,6 +1,6 @@
 package util;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +17,8 @@ import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * TODO write documentation
@@ -57,7 +59,7 @@ public abstract class AbstractTest {
     protected void runTest(int i, Function<Scanner, String> function) throws IOException {
         String result = function.apply(buildScanner(i + ".in"));
         String expected = readFile(i + ".ans");
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
     protected Scanner buildScanner(String s) throws FileNotFoundException {

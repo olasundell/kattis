@@ -1,9 +1,11 @@
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * TODO write documentation
@@ -16,7 +18,7 @@ public class ThinkingOfANumberTest extends AbstractTest {
     }
 
     @Test
-    @Ignore("faulty test data")
+    @Disabled("faulty test data")
     public void two() throws IOException {
         runTest(2, new ThinkingOfANumber()::solve);
     }
@@ -31,7 +33,7 @@ public class ThinkingOfANumberTest extends AbstractTest {
         rules.addDivisibleBy(21);
         rules.addDivisibleBy(42);
 
-        Assert.assertEquals(84, rules.getLCM());
+        assertEquals(84, rules.getLCM());
     }
 
     @Test
@@ -40,7 +42,7 @@ public class ThinkingOfANumberTest extends AbstractTest {
 
         rules.addDivisibleBy(5);
         rules.lessThan = 13;
-        Assert.assertEquals(10, rules.getLessThan());
+        assertEquals(10, rules.getLessThan());
     }
 
     @Test
@@ -50,7 +52,7 @@ public class ThinkingOfANumberTest extends AbstractTest {
         rules.addDivisibleBy(3);
         rules.addDivisibleBy(7);
         rules.lessThan = 100;
-        Assert.assertEquals(84, rules.getLessThan());
+        assertEquals(84, rules.getLessThan());
     }
 
 

@@ -1,5 +1,5 @@
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.io.IOException;
 public class CommunicationTest extends AbstractTest {
 
     @Test
-    @Ignore("does not work")
+    @Disabled("does not work")
     public void one() throws IOException {
         runTest(1, new Communication()::solve);
     }

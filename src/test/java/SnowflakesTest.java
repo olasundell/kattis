@@ -1,5 +1,5 @@
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class SnowflakesTest extends AbstractTest {
     }
 
     @Test
-    @Ignore("probably broken data")
+    @Disabled("probably broken data")
     public void four() throws IOException {
         runTest(4, new Snowflakes()::solve);
     }

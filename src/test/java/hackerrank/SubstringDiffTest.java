@@ -1,10 +1,12 @@
 package hackerrank;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * TODO write documentation
@@ -23,49 +25,49 @@ public class SubstringDiffTest extends AbstractTest {
 	@Test
 	public void slideSimplest() {
 		int result = new SubstringDiff().letItSlide("a", "a", 0);
-		Assert.assertEquals(1, result);
+		assertEquals(1, result);
 	}
 
 	@Test
 	public void slideSimple() {
 		int result = new SubstringDiff().letItSlide("abcd", "abcd", 0);
-		Assert.assertEquals(4, result);
+		assertEquals(4, result);
 	}
 
 	@Test
 	public void slideOneDiff() {
 		int result = new SubstringDiff().letItSlide("aecd", "abcd", 1);
-		Assert.assertEquals(4, result);
+		assertEquals(4, result);
 	}
 
 	@Test
 	public void slideMinorDiff() {
 		int result = new SubstringDiff().letItSlide("aecd", "abcd", 0);
-		Assert.assertEquals(2, result);
+		assertEquals(2, result);
 	}
 
 	@Test
 	public void slideDiffAtEnd() {
 		int result = new SubstringDiff().letItSlide("abce", "abcd", 0);
-		Assert.assertEquals(3, result);
+		assertEquals(3, result);
 	}
 
 	@Test
 	public void slideDiffAtBeginning() {
 		int result = new SubstringDiff().letItSlide("xbcd", "abcd", 0);
-		Assert.assertEquals(3, result);
+		assertEquals(3, result);
 	}
 
 	@Test
 	public void slideNoMatch() {
 		int result = new SubstringDiff().letItSlide("xxxx", "abcd", 0);
-		Assert.assertEquals(0, result);
+		assertEquals(0, result);
 	}
 
 //	@Test
 	public void slideTwoDiff() {
 		int result = new SubstringDiff().letItSlide("tabriz", "torino", 2);
-		Assert.assertEquals(4, result);
+		assertEquals(4, result);
 	}
 
 	@Override

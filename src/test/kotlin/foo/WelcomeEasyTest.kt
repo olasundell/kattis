@@ -1,10 +1,10 @@
 package foo
 
 import foo.WelcomeEasy
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 /**
  * TODO write documentation
@@ -12,7 +12,7 @@ import org.junit.Test
 class WelcomeEasyTest : AbstractKotlinTest() {
     @Test
     fun padSumShouldPad() {
-        Assert.assertEquals("0001", WelcomeEasy().padSum(10001))
+        Assertions.assertEquals("0001", WelcomeEasy().padSum(10001))
     }
     @Test
     fun one() {

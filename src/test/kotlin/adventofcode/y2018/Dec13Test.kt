@@ -1,11 +1,11 @@
 package adventofcode.y2018
 
-import org.junit.Assert
-import org.junit.Before
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import adventofcode.y2018.Dec13.*
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeAll
 import java.lang.System.out
 
 /**
@@ -15,7 +15,7 @@ class Dec13Test : AbstractKotlinTest() {
     lateinit var rectangle: Dec13.Rectangle
     lateinit var intersections: Set<Dec13.Intersection>
 
-    @Before
+    @BeforeAll
     fun setup() {
         val upLeft = Point(1, 1)
         val downRight = Point(3, 4)
@@ -68,7 +68,7 @@ class Dec13Test : AbstractKotlinTest() {
         val cart = Cart(CartPosDir(Point(2, 1), Direction.RIGHT), rectangle)
         val moveCart = Dec13().moveCart(cart, intersections)
 
-        Assert.assertEquals(CartPosDir(Point(3, 1), Direction.RIGHT), moveCart.cartPosDir)
+        assertEquals(CartPosDir(Point(3, 1), Direction.RIGHT), moveCart.cartPosDir)
     }
 
     @Test
@@ -77,7 +77,7 @@ class Dec13Test : AbstractKotlinTest() {
 
         val moveCart = move(cart, intersections, 2)
 
-        Assert.assertEquals(CartPosDir(Point(3, 2), Direction.DOWN), moveCart.cartPosDir)
+        assertEquals(CartPosDir(Point(3, 2), Direction.DOWN), moveCart.cartPosDir)
     }
 
     @Test
@@ -86,7 +86,7 @@ class Dec13Test : AbstractKotlinTest() {
 
         val moveCart = move(cart, intersections, 2)
 
-        Assert.assertEquals(CartPosDir(Point(1, 2), Direction.DOWN), moveCart.cartPosDir)
+        assertEquals(CartPosDir(Point(1, 2), Direction.DOWN), moveCart.cartPosDir)
     }
 
     @Test
@@ -95,7 +95,7 @@ class Dec13Test : AbstractKotlinTest() {
 
         val moveCart = move(cart, intersections, 2)
 
-        Assert.assertEquals(CartPosDir(Point(2, 1), Direction.RIGHT), moveCart.cartPosDir)
+        assertEquals(CartPosDir(Point(2, 1), Direction.RIGHT), moveCart.cartPosDir)
     }
 
     @Test
@@ -104,7 +104,7 @@ class Dec13Test : AbstractKotlinTest() {
 
         val moveCart = move(cart, intersections, 2)
 
-        Assert.assertEquals(CartPosDir(Point(2, 4), Direction.LEFT), moveCart.cartPosDir)
+        assertEquals(CartPosDir(Point(2, 4), Direction.LEFT), moveCart.cartPosDir)
     }
 
     @Test
@@ -120,12 +120,12 @@ class Dec13Test : AbstractKotlinTest() {
 
         val moveCart = move(cart, intersections1, 1)
 
-        Assert.assertEquals(CartPosDir(Point(3, 3), Direction.RIGHT), moveCart.cartPosDir)
-        Assert.assertEquals(intersectRect, moveCart.rectangle)
+        assertEquals(CartPosDir(Point(3, 3), Direction.RIGHT), moveCart.cartPosDir)
+        assertEquals(intersectRect, moveCart.rectangle)
 
         val mc2 = move(moveCart, intersections1, 1)
-        Assert.assertEquals(CartPosDir(Point(4, 3), Direction.RIGHT), mc2.cartPosDir)
-        Assert.assertEquals(intersectRect, mc2.rectangle)
+        assertEquals(CartPosDir(Point(4, 3), Direction.RIGHT), mc2.cartPosDir)
+        assertEquals(intersectRect, mc2.rectangle)
     }
 
     @Test
@@ -135,7 +135,7 @@ class Dec13Test : AbstractKotlinTest() {
 
         val state = State(setOf(rectangle), setOf(), listOf(cart1, cart2))
 
-        Assert.assertFalse(Dec13().hasCollision(state))
+        assertFalse(Dec13().hasCollision(state))
     }
 
     @Test
@@ -145,7 +145,7 @@ class Dec13Test : AbstractKotlinTest() {
 
         val state = State(setOf(rectangle), setOf(), listOf(cart1, cart2))
 
-        Assert.assertTrue(Dec13().hasCollision(state))
+        assertTrue(Dec13().hasCollision(state))
     }
 
     @Test

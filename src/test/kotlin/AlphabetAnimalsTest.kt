@@ -1,7 +1,6 @@
 import kattis.AlphabetAnimals
+import org.junit.jupiter.api.Test
 import util.AbstractKotlinTest
-
-import org.junit.Test
 
 /**
  * TODO write documentation

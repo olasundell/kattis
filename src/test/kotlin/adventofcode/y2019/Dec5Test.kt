@@ -1,11 +1,11 @@
 package adventofcode.y2019
 
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 /**
  * TODO write documentation
@@ -74,8 +74,8 @@ class Dec5Test : AbstractKotlinTest() {
     @Test
     fun immPos() {
         val result = Dec5.ParamMode(21002)
-        Assert.assertEquals(Dec5.Mode.POSITION, result.first)
-        Assert.assertEquals(Dec5.Mode.IMMEDIATE, result.second)
-        Assert.assertEquals(Dec5.Mode.RELATIVE, result.third)
+        assertEquals(Dec5.Mode.POSITION, result.first)
+        assertEquals(Dec5.Mode.IMMEDIATE, result.second)
+        assertEquals(Dec5.Mode.RELATIVE, result.third)
     }
 }

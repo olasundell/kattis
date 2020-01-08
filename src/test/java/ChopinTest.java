@@ -1,5 +1,5 @@
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ public class ChopinTest extends AbstractTest {
 
 	private Chopin chopin;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		chopin = new Chopin();
 	}

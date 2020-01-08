@@ -4,20 +4,18 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.debug.DebugProbes
 import kotlinx.coroutines.debug.junit4.CoroutinesTimeout
-import org.junit.Assert
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
-import org.junit.Rule
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 /**
  * TODO write documentation
  */
 class Dec7Test : AbstractKotlinTest() {
-    @Rule
-    @JvmField
-    val timeout = CoroutinesTimeout.seconds(5)
+//    @Rule
+//    @JvmField
+//    val timeout = CoroutinesTimeout.seconds(5)
 
     @Test
     fun one() {
@@ -46,7 +44,7 @@ class Dec7Test : AbstractKotlinTest() {
         val params = listOf(4, 3, 2, 1,0 )
         val last = run(mem, params)
 
-        Assert.assertEquals(43210, last)
+        assertEquals(43210, last)
     }
 
     @Test
@@ -55,7 +53,7 @@ class Dec7Test : AbstractKotlinTest() {
         val params = listOf(0,1,2,3,4)
 
         val result = run(mem, params)
-        Assert.assertEquals(54321, result)
+        assertEquals(54321, result)
     }
 
     @Test

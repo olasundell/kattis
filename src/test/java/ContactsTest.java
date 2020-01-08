@@ -1,9 +1,12 @@
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
 import java.util.Scanner;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * TODO write documentation
@@ -24,9 +27,9 @@ public class ContactsTest extends AbstractTest {
 				           "find bar\n";
 		String result = new Contacts().solve(new Scanner(s));
 
-		Assert.assertNotNull(result);
-		Assert.assertFalse(result.isEmpty());
-		Assert.assertEquals("3\n0", result);
+		assertNotNull(result);
+		assertFalse(result.isEmpty());
+		assertEquals("3\n0", result);
 	}
 
 	@Override

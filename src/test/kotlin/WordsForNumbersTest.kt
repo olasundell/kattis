@@ -1,5 +1,5 @@
 import kattis.WordsForNumbers
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import util.AbstractKotlinTest
 
 /**

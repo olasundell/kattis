@@ -1,7 +1,7 @@
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
@@ -17,10 +17,12 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * TODO write documentation
  */
-@Ignore("slooow")
+@Disabled("slooow")
 public class ArmyStrengthEasyTest extends AbstractTest {
 
 	private ArmyStrengthEasy armyStrengthEasy;
@@ -31,7 +33,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 	private List<Integer> godzillaList;
 	private List<Integer> mechaList;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		armyStrengthEasy = new ArmyStrengthEasy();
 		godzilla = new PriorityQueue<>();
@@ -60,7 +62,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 	public void fightWithEmptySetsShouldWork() {
 		String result = armyStrengthEasy.fight(godzilla, mecha);
 
-		Assert.assertEquals(ArmyStrengthEasy.UNCERTAIN, result);
+		assertEquals(ArmyStrengthEasy.UNCERTAIN, result);
 	}
 
 	@Test
@@ -68,7 +70,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 		godzilla.add(1);
 		String result = armyStrengthEasy.fight(godzilla, mecha);
 
-		Assert.assertEquals(ArmyStrengthEasy.GODZILLA, result);
+		assertEquals(ArmyStrengthEasy.GODZILLA, result);
 	}
 
 	@Test
@@ -76,7 +78,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 		mecha.add(1);
 		String result = armyStrengthEasy.fight(godzilla, mecha);
 
-		Assert.assertEquals(ArmyStrengthEasy.MECHA_GODZILLA, result);
+		assertEquals(ArmyStrengthEasy.MECHA_GODZILLA, result);
 	}
 
 	@Test
@@ -85,7 +87,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 		mecha.add(1);
 		String result = armyStrengthEasy.fight(godzilla, mecha);
 
-		Assert.assertEquals(ArmyStrengthEasy.GODZILLA, result);
+		assertEquals(ArmyStrengthEasy.GODZILLA, result);
 	}
 
 	@Test
@@ -149,7 +151,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 	}
 
 	@Test
-	@Ignore("too slow")
+	@Disabled("too slow")
 	public void fightShouldWorkWithMaxDataset() {
 		Random random = new Random(0);
 		List<Dataset> dataset = new ArrayList<>();
@@ -179,7 +181,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 	public void fightWithMap() {
 		String result = armyStrengthEasy.fight(godzillaMap, mechaMap);
 
-		Assert.assertEquals(ArmyStrengthEasy.UNCERTAIN, result);
+		assertEquals(ArmyStrengthEasy.UNCERTAIN, result);
 	}
 
 
@@ -188,7 +190,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 		godzillaMap.put(1, 1);
 		String result = armyStrengthEasy.fight(godzillaMap, mechaMap);
 
-		Assert.assertEquals(ArmyStrengthEasy.GODZILLA, result);
+		assertEquals(ArmyStrengthEasy.GODZILLA, result);
 	}
 
 	@Test
@@ -196,7 +198,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 		mechaMap.put(1, 1);
 		String result = armyStrengthEasy.fight(godzillaMap, mechaMap);
 
-		Assert.assertEquals(ArmyStrengthEasy.MECHA_GODZILLA, result);
+		assertEquals(ArmyStrengthEasy.MECHA_GODZILLA, result);
 	}
 
 	@Test
@@ -205,11 +207,11 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 		mechaMap.put(1, 1);
 		String result = armyStrengthEasy.fight(godzillaMap, mechaMap);
 
-		Assert.assertEquals(ArmyStrengthEasy.GODZILLA, result);
+		assertEquals(ArmyStrengthEasy.GODZILLA, result);
 	}
 
 	@Test
-	@Ignore("too slow")
+	@Disabled("too slow")
 	public void fightMapShouldWorkWithMaxDataset() {
 		Random random = new Random(0);
 		List<Dataset> dataset = new ArrayList<>();
@@ -248,7 +250,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 	public void fightWithList() {
 		String result = armyStrengthEasy.fight(godzillaList, mechaList);
 
-		Assert.assertEquals(ArmyStrengthEasy.UNCERTAIN, result);
+		assertEquals(ArmyStrengthEasy.UNCERTAIN, result);
 	}
 
 
@@ -258,7 +260,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 
 		String result = armyStrengthEasy.fight(godzillaList, mechaList);
 
-		Assert.assertEquals(ArmyStrengthEasy.GODZILLA, result);
+		assertEquals(ArmyStrengthEasy.GODZILLA, result);
 	}
 
 	@Test
@@ -266,7 +268,7 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 		mechaList.add(1);
 		String result = armyStrengthEasy.fight(godzillaList, mechaList);
 
-		Assert.assertEquals(ArmyStrengthEasy.MECHA_GODZILLA, result);
+		assertEquals(ArmyStrengthEasy.MECHA_GODZILLA, result);
 	}
 
 	@Test
@@ -275,11 +277,11 @@ public class ArmyStrengthEasyTest extends AbstractTest {
 		mechaList.add(1);
 		String result = armyStrengthEasy.fight(godzillaList, mechaList);
 
-		Assert.assertEquals(ArmyStrengthEasy.GODZILLA, result);
+		assertEquals(ArmyStrengthEasy.GODZILLA, result);
 	}
 
 	@Test
-	@Ignore("too slow")
+	@Disabled("too slow")
 	public void fightListShouldWorkWithMaxDataset() throws IOException {
 		Random random = new Random(0);
 		List<Dataset> dataset = new ArrayList<>();

@@ -1,9 +1,10 @@
 import kattis.CountingStars
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import kattis.CountingStars.*
+import org.junit.jupiter.api.Assertions.*
 
 /**
  * TODO write documentation

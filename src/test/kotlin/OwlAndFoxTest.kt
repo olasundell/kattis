@@ -1,8 +1,9 @@
 import kattis.OwlAndFox
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 /**
  * TODO write documentation
@@ -16,6 +17,6 @@ class OwlAndFoxTest : AbstractKotlinTest() {
     @Test
     fun mapping() {
         val n = "12".map { (it - '0') }.sum()
-        Assert.assertEquals(3, n)
+        assertEquals(3, n)
     }
 }

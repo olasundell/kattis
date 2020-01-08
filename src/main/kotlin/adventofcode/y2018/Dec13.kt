@@ -226,7 +226,17 @@ class Dec13 {
         }
     }
 
-    data class CartPosDir(val pos: Point, val dir: Direction)
+    data class CartPosDir(val pos: Point, val dir: Direction) {
+        fun move(mightHaveTurned: Direction = Direction.NONE): CartPosDir {
+            val turnedDir = when (mightHaveTurned) {
+                Direction.LEFT -> this.dir.left()
+                Direction.RIGHT -> this.dir.right()
+                else -> this.dir
+            }
+
+            return CartPosDir(this.pos + Point(turnedDir.x, turnedDir.y), turnedDir)
+        }
+    }
 
     /**
      * it turns left the first time, goes straight the second time, turns right the third time

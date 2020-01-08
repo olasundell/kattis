@@ -1,5 +1,5 @@
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.io.IOException;
 public class BookingARoomTest extends AbstractTest {
 
     @Test
-    @Ignore("Faulty test data")
+    @Disabled("Faulty test data")
     public void one() throws IOException {
         runTest(1, new BookingARoom()::solve);
     }

@@ -1,7 +1,7 @@
 import kattis.ShatteredCake
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class ShatteredCakeTest : AbstractKotlinTest() {
     @Test

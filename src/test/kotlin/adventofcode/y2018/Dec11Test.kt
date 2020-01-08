@@ -1,10 +1,10 @@
 package adventofcode.y2018
 
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 class Dec11Test : AbstractKotlinTest() {
     @Test
@@ -29,8 +29,8 @@ class Dec11Test : AbstractKotlinTest() {
 
     @Test
     fun initTest() {
-        Assert.assertEquals(-5, Dec11().init(122, 79, 57))
-        Assert.assertEquals(0, Dec11().init(217, 196, 39))
-        Assert.assertEquals(4, Dec11().init(101, 153, 71))
+        Assertions.assertEquals(-5, Dec11().init(122, 79, 57))
+        Assertions.assertEquals(0, Dec11().init(217, 196, 39))
+        Assertions.assertEquals(4, Dec11().init(101, 153, 71))
     }
 }

@@ -2,10 +2,8 @@ package adventofcode.y2019
 
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
-import org.junit.Before
-import org.junit.BeforeClass
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import java.awt.Point
 
 /**

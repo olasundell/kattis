@@ -1,5 +1,5 @@
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class ToiletTest extends AbstractTest {
 	}
 
 	@Test
-	@Ignore("faulty data")
+	@Disabled("faulty data")
 	public void six() throws IOException {
 		runTest(6, new Toilet()::solve);
 	}

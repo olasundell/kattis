@@ -1,6 +1,6 @@
 import kattis.MarsWindow
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import util.AbstractKotlinTest
 import java.time.LocalDate
 import java.util.*
@@ -32,7 +32,7 @@ class MarsWindowTest : AbstractKotlinTest() {
     @Test
     fun specific() {
         val marsWindow = MarsWindow()
-        Assert.assertEquals("2026 should work", "yes", marsWindow.solve(Scanner("2026")))
+        assertEquals("2026 should work", "yes", marsWindow.solve(Scanner("2026")))
     }
 
     @Test
@@ -55,7 +55,7 @@ class MarsWindowTest : AbstractKotlinTest() {
                 "no"
             }
 
-            Assert.assertEquals(i.toString(), expected, marsWindow.solve(Scanner(i.toString())))
+            assertEquals(i.toString(), expected, marsWindow.solve(Scanner(i.toString())))
         }
     }
 }

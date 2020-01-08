@@ -1,7 +1,7 @@
 import kattis.LicenseToLaunch
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 /**
  * TODO write documentation

@@ -1,11 +1,13 @@
 package juryjeopardy;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
 import java.util.Scanner;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * TODO write documentation
@@ -70,7 +72,7 @@ public class JuryJeopardyTest extends AbstractTest {
 
 		String s = new JuryJeopardy().solve(new Scanner(builder.toString()));
 
-		Assert.assertNotNull(s);
+		assertNotNull(s);
 	}
 
 	@Override

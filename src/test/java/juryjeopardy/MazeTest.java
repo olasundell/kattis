@@ -1,7 +1,8 @@
 package juryjeopardy;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * TODO write documentation
@@ -11,14 +12,14 @@ public class MazeTest {
 	public void shouldBeInitedProperly() {
 		Maze maze = new Maze();
 
-		Assert.assertEquals(2, maze.maxX);
-		Assert.assertEquals(3, maze.maxY);
+		assertEquals(2, maze.maxX);
+		assertEquals(3, maze.maxY);
 
 		String s = "2 3\n" +
 				"##\n" +
 				".#\n" +
 				"##";
 
-		Assert.assertEquals(s, maze.prettyPrint());
+		assertEquals(s, maze.prettyPrint());
 	}
 }

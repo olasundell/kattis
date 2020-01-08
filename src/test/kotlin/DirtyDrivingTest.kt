@@ -1,7 +1,7 @@
 import kattis.DirtyDriving
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class DirtyDrivingTest : AbstractKotlinTest() {
     @Test

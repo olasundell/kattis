@@ -1,9 +1,11 @@
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * TODO write documentation
@@ -15,7 +17,7 @@ public class NotAmusedTest extends AbstractTest {
     private NotAmused.Visit visit2;
     private NotAmused.Person person;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         visit = new NotAmused.Visit();
 
@@ -45,12 +47,12 @@ public class NotAmusedTest extends AbstractTest {
 
     @Test
     public void shouldCalculateVisit() {
-        Assert.assertEquals(6.10, visit.sum(), 0.01);
+        assertEquals(6.10, visit.sum(), 0.01);
     }
 
     @Test
     public void shouldSumVisits() {
-        Assert.assertEquals(12.2, person.sum(), 0.01);
+        assertEquals(12.2, person.sum(), 0.01);
     }
 
     @Test
@@ -62,12 +64,12 @@ public class NotAmusedTest extends AbstractTest {
         eePerson.enter(70);
         eePerson.exit(72);
 
-        Assert.assertEquals(0.40, eePerson.sum(), 0.01);
+        assertEquals(0.40, eePerson.sum(), 0.01);
     }
 
     @Test
     public void shouldToStringPerson() {
-        Assert.assertEquals(NAME + " $12.20", person.toString());
+        assertEquals(NAME + " $12.20", person.toString());
     }
 
     @Test
@@ -75,7 +77,7 @@ public class NotAmusedTest extends AbstractTest {
         NotAmused.Day day = new NotAmused.Day(1);
         day.addPerson(person);
 
-        Assert.assertEquals("Day 1\nfoo $12.20", day.toString());
+        assertEquals("Day 1\nfoo $12.20", day.toString());
     }
 
     @Override

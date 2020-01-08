@@ -1,8 +1,8 @@
 import kattis.ScrollingSign
-import org.junit.Assert
+import org.junit.jupiter.api.Assertions
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 /**
  * TODO write documentation
@@ -51,7 +51,7 @@ class ScrollingSignTest : AbstractKotlinTest() {
         val two = sign.bitChecksum("XYZZYATROSYSINTHE")
 
         val pos = sign.match(one, two)
-        Assert.assertEquals(4, pos)
+        Assertions.assertEquals(4, pos)
     }
 
     @Test
@@ -60,7 +60,7 @@ class ScrollingSignTest : AbstractKotlinTest() {
         val two ="XYZZYATROSYSINTHE"
 
         val concatted = sign.concat(one, two, 4)
-        Assert.assertEquals("LADLASFOOBARXYZZYATROSYSINTHE", concatted)
+        Assertions.assertEquals("LADLASFOOBARXYZZYATROSYSINTHE", concatted)
     }
 
     @Test
@@ -72,6 +72,6 @@ class ScrollingSignTest : AbstractKotlinTest() {
         val checksum = sign.bitChecksum(two)
 
         val result = sign.reduceStrings(one, two)
-        Assert.assertEquals(result, "$one$two")
+        Assertions.assertEquals(result, "$one$two")
     }
 }

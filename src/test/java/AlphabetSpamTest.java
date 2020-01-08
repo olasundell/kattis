@@ -1,5 +1,5 @@
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
@@ -10,13 +10,13 @@ import java.io.IOException;
 public class AlphabetSpamTest extends AbstractTest {
 
     @Test
-    @Ignore
+    @Disabled
     public void one() throws IOException {
         runTest(1, new AlphabetSpam()::solve);
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void two() throws IOException {
         runTest(2, new AlphabetSpam()::solve);
     }

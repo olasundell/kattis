@@ -2,8 +2,8 @@ package adventofcode.y2018
 
 import util.AbstractKotlinTest
 
-import org.junit.Assert.*
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 class Dec5Test : AbstractKotlinTest() {
     // unit test for first

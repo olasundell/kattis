@@ -1,9 +1,10 @@
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * TODO write documentation
@@ -12,7 +13,7 @@ public class CaloriesTest extends AbstractTest {
 
 	private Calories calories;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		calories = new Calories();
 	}
@@ -26,10 +27,10 @@ public class CaloriesTest extends AbstractTest {
 	public void shouldParseLine() {
 		Calories.Consumption c = calories.parseLine("1g 15% 20% 30% 1C");
 
-		Assert.assertEquals(9, c.fat, 0.1);
-		Assert.assertEquals(1, c.alcohol, 0.1);
+		assertEquals(9, c.fat, 0.1);
+		assertEquals(1, c.alcohol, 0.1);
 		int i = c.percentFat();
-		Assert.assertEquals(32, i);
+		assertEquals(32, i);
 	}
 
 	@Test
@@ -41,9 +42,9 @@ public class CaloriesTest extends AbstractTest {
 
 		Calories.Consumption consumption = calories.calories(c);
 
-		Assert.assertEquals(10, consumption.fat, 0.1);
-		Assert.assertEquals(10, consumption.sugar, 0.1);
-		Assert.assertEquals(50, consumption.percentFat());
+		assertEquals(10, consumption.fat, 0.1);
+		assertEquals(10, consumption.sugar, 0.1);
+		assertEquals(50, consumption.percentFat());
 
 		c = new Calories.ConsumptionHolder();
 
@@ -54,12 +55,12 @@ public class CaloriesTest extends AbstractTest {
 
 		consumption = calories.calories(c);
 
-		Assert.assertEquals(7, consumption.fat, 0.1);
-		Assert.assertEquals(1, consumption.sugar, 0.1);
-		Assert.assertEquals(1, consumption.starch, 0.1);
-		Assert.assertEquals(1, consumption.protein, 0.1);
+		assertEquals(7, consumption.fat, 0.1);
+		assertEquals(1, consumption.sugar, 0.1);
+		assertEquals(1, consumption.starch, 0.1);
+		assertEquals(1, consumption.protein, 0.1);
 
-		Assert.assertEquals(70, consumption.percentFat());
+		assertEquals(70, consumption.percentFat());
 	}
 
 	@Override

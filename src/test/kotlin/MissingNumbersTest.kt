@@ -1,7 +1,7 @@
 import kattis.MissingNumbers
 import util.AbstractKotlinTest
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 /**
  * TODO write documentation

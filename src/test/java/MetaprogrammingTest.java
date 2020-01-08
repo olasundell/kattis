@@ -1,10 +1,12 @@
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import util.AbstractTest;
 
 import java.io.IOException;
 import java.util.HashMap;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * TODO write documentation
@@ -13,7 +15,7 @@ public class MetaprogrammingTest extends AbstractTest {
 	private Metaprogramming metaprogramming;
 	private HashMap<String, Integer> defines;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		metaprogramming = new Metaprogramming();
 		defines = new HashMap<String, Integer>(){{
@@ -33,28 +35,28 @@ public class MetaprogrammingTest extends AbstractTest {
 		String value = "123";
 		String result = metaprogramming.getKey("define " + value + " " + expected, value);
 
-		Assert.assertEquals(expected, result);
+		assertEquals(expected, result);
 	}
 
 	@Test
 	public void evalShouldReturnTrue() {
 		String actual = metaprogramming.eval("eval f > g", defines);
 
-		Assert.assertEquals("true", actual);
+		assertEquals("true", actual);
 	}
 
 	@Test
 	public void evalShouldReturnFalse() {
 		String actual = metaprogramming.eval("eval f < g", defines);
 
-		Assert.assertEquals("false", actual);
+		assertEquals("false", actual);
 	}
 
 	@Test
 	public void evalShouldReturnUndefined() {
 		String actual = metaprogramming.eval("eval q > g", defines);
 
-		Assert.assertEquals("undefined", actual);
+		assertEquals("undefined", actual);
 	}
 
 	@Override
