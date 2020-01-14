@@ -1,5 +1,7 @@
 package adventofcode.y2019;
 
+import java.lang.Integer.min
+import java.lang.Math.abs
 import java.lang.Math.ceil
 
 /**
@@ -7,17 +9,43 @@ import java.lang.Math.ceil
  */
 class Dec16 {
     private val pattern = listOf(0, 1, 0, -1)
+//    private val pattern = listOf(1, 0, -1, 0)
 
-    fun solve(str: String, noOfPhases: Int): String {
+    fun solve(str: String, noOfPhases: Int, offset: Boolean = false): String {
         val v = str.map { (it - '0') }
-        val currentArr =
+        var currentArr = v.toList()
+        var nextArr = currentArr.toMutableList()
+
+        println("size ${v.size}")
+
         repeat (noOfPhases) { phase ->
-            repeat (8) { eight ->
-                v.mapIndexed { index, c -> patternAt(eight, index) * c }
+            repeat (currentArr.size) { i ->
+                var s = 0
+                var j = i
+                var total = 0
+                while (j < currentArr.size) {
+                    val s = currentArr.subList(min(j, currentArr.size), min(j + i + 1, currentArr.size))
+                    total += s.sum()
+                    j += 2 * (i + 1)
+                    val s2 = currentArr.subList(min(j, currentArr.size), min(j + i + 1, currentArr.size))
+                    total -= s2.sum()
+                    j += 2 * (i + 1)
+                }
+                nextArr[i] = abs(total) % 10
+                if (i % 1_000 == 0) {
+                    println("$phase $i")
+                }
             }
+            currentArr = nextArr.toList()
         }
 
-        return ""
+        return if (offset) {
+            val o = v.subList(0, 7).sum()
+//            val arr = listOf(currentArr, currentArr).flatten()
+            currentArr.subList(o, o + 8)
+        } else {
+            currentArr.subList(0, 8)
+        }.joinToString(separator = "")
     }
 
     //    val patterns= listOf(
@@ -36,14 +64,19 @@ class Dec16 {
         } else if (eight == 0) {
             return pattern[(index + 1) % 4]
         }
-
-        val i = (index - eight).toDouble()
-        val e = (eight + 1).toDouble()
-        val ceil = ceil(i / e)
-        val toInt = ceil.toInt()
-        val idx = toInt % 4
+        val p = index - eight
+//        val i = p % 4
+        val d = p.toDouble() / eight.toDouble()
+        val ceil = ceil(d)
+        val idx = ceil.toInt() % 4
 
         return pattern[idx]
-//        return 0
     }
+//
+//        val i = (index - eight).toDouble()
+//        val e = (eight + 1).toDouble()
+//        val ceil = kotlin.math.ceil(i / e)
+//        val toInt = ceil.toInt()
+//        val idx = toInt % 4
+//
 }

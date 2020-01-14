@@ -40,6 +40,14 @@ class Dec5 {
         return runProgram(memory, output, inputC)
     }
 
+    suspend fun runProgramOutputOnChannel(memory: List<Long>, output: Channel<Long>, input: Channel<Long>) {
+        var state = State("", memory, Ip(0, 0), input, output, true)
+
+        while (state.running) {
+            state = state.execute()
+        }
+    }
+
     suspend fun runProgram(memory: List<Long>, output: Channel<Long>, input: Channel<Long>): String {
         var state = State("", memory, Ip(0, 0), input, output, true)
 
@@ -141,12 +149,6 @@ class Dec5 {
     }
 
     class ParamMode(opcode: Long) {
-//        this[ip] % 1000 / 100
-//        this[ip] % 10000 / 1000
-//        this[ip] / 10000
-//        val first = Mode.from((opcode / 100L) % 10L)
-//        val second = Mode.from((opcode / 1_000L) % 10L)
-//        val third = Mode.from((opcode / 10_000L) % 10L)
         val first = Mode.from(opcode % 1_000 / 100)
         val second = Mode.from(opcode % 10_000 / 1_000)
         val third = Mode.from(opcode / 10_000)
