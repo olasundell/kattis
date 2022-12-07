@@ -8,7 +8,28 @@ import java.util.Scanner;
  */
 class Dec14 {
     val amountOfOreConsumers = mutableMapOf<String, Long>()
+
     fun solve(scanner: Scanner): String {
+        val totality = createReactionMap(scanner)
+
+        val toCalc = mutableSetOf<Reaction>()
+        toCalc.addAll(totality.reactionMap.values)
+
+        var fuel = 0
+
+//        while (!onlyOreReactionsLeft(totality.oreConsumers, toCalc)) {
+//
+//        }
+
+        return "$fuel"
+    }
+
+//    private fun onlyOreReactionsLeft(oreConsumers: Map<String, Reaction>, toCalc: Set<Reaction>): Boolean {
+//        toCalc.filter { oreConsumers.containsKey(it.) }
+//    }
+
+
+    fun solve2(scanner: Scanner): String {
         val totality = createReactionMap(scanner)
         val oreConsumers = mutableMapOf<String, Long>()
         val currentAmounts = mutableMapOf<String, Long>()

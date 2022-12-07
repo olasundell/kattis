@@ -8,3 +8,8 @@ node_modules
 *.swp
 *.swo
 .flowconfig
+
+
+# Added by cargo
+
+/target

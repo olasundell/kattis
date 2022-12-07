@@ -97,7 +97,7 @@ class Dec7Test : AbstractKotlinTest() {
             results.add(runFeedbacked(mem, it))
         }
 
-        assertEquals(0, results.max())
+        assertEquals(0, results.maxOrNull())
     }
 
     private fun runFeedbacked(mem: List<Int>, params: List<Int>): Long {

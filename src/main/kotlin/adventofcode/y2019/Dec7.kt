@@ -34,7 +34,7 @@ class Dec7 {
 
 //        return output.joinToString(separator = "\n")
 
-        return "${results.max()}"
+        return "${results.maxOrNull()}"
 //        return "-1"
 //        return "${mapped.max()}"
     }

@@ -41,7 +41,7 @@ class Dec10Test : AbstractKotlinTest() {
         val vapored = mutableListOf<Point>()
         repeat(400) {
             val k = keys[i]
-            val p = map[k]!!.minBy { dec10.point.distance(it) }!!
+            val p = map[k]!!.minByOrNull { dec10.point.distance(it) }!!
             err.println("${it + 1} ${p.x},${p.y}")
             vapored.add(p)
             map[k]!!.remove(p)

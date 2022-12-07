@@ -111,7 +111,7 @@ class Dec9Test : AbstractKotlinTest() {
 
     @Test
     fun largeNumber() {
-        val mem = listOf(104,1125899906842624,99)
+        val mem = listOf<Long>(104,1125899906842624,99)
 
         runBlocking {
             val output = Dec5().runProgram(mem, listOf())

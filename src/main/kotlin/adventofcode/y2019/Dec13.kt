@@ -81,21 +81,23 @@ class Dec13 {
     }
 
     fun printTiles(tiles: Map<Pair<Long, Long>, Long>) {
-        val maxX = tiles.keys.map { it.first }.max() ?: 0
-        val maxY = tiles.keys.map { it.second }.max() ?: 0
+        val maxX = tiles.keys.map { it.first }.maxOrNull() ?: 0
+        val maxY = tiles.keys.map { it.second }.maxOrNull() ?: 0
 
         val lines = mutableListOf<String>()
         for (y in 0..maxY) {
             val line = mutableListOf<Char>()
             for (x in 0..maxX) {
-                line.add(when (tiles[Pair(x, y)]) {
-                    0L -> ' '
-                    1L -> '#'
-                    2L -> 'X'
-                    3L -> '='
-                    4L -> 'o'
-                    else -> ' '
-                })
+                line.add(
+                    when (tiles[Pair(x, y)]) {
+                        0L -> ' '
+                        1L -> '#'
+                        2L -> 'X'
+                        3L -> '='
+                        4L -> 'o'
+                        else -> ' '
+                    }
+                )
             }
             lines.add(line.joinToString(separator = ""))
         }

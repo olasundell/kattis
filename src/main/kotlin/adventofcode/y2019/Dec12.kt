@@ -175,7 +175,7 @@ class Dec12 {
                 "vz" -> it.vel.z
                 else -> throw IllegalArgumentException("$key isn't valid")
             }
-        }.min() ?: 0, minMap[key] ?: 0)
+        }.minOrNull() ?: 0, minMap[key] ?: 0)
     }
 
     fun maximate(t: List<Moon>, key: String) {
@@ -189,7 +189,7 @@ class Dec12 {
                 "vz" -> it.vel.z
                 else -> throw IllegalArgumentException("$key isn't valid")
             }
-        }.max() ?: 0, maxMap[key] ?: 0)
+        }.maxOrNull() ?: 0, maxMap[key] ?: 0)
     }
     fun iterateMoons(moons: List<Moon>): List<Moon> {
         val newList = moons.toMutableList()

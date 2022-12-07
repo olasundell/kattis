@@ -41,61 +41,63 @@ class FlyingSafely {
     }
 
     data class Graph<T>(
-            val vertices: Set<T>,
-            val edges: Map<T, Set<T>>
+        val vertices: Set<T>,
+        val edges: Map<T, Set<T>>
 //            ,
 //            val weights: Map<Pair<T, T>, Int>
     )
 
-    fun <T> dijkstra(graph: Graph<T>, start: T): Map<T, T?> {
-        val S: MutableSet<T> = mutableSetOf() // a subset of vertices, for which we know the true distance
-        val delta = graph.vertices.map { it to Int.MAX_VALUE }.toMap().toMutableMap()
-        delta[start] = 0
-        val previous: MutableMap<T, T?> = graph.vertices.map { it to null }.toMap().toMutableMap()
-        while (S != graph.vertices) {
-            val v: T = delta
+    companion object {
+        fun <T> dijkstra(graph: Graph<T>, start: T): Map<T, T?> {
+            val S: MutableSet<T> = mutableSetOf() // a subset of vertices, for which we know the true distance
+            val delta = graph.vertices.associateWith { Int.MAX_VALUE }.toMutableMap()
+            delta[start] = 0
+            val previous: MutableMap<T, T?> = graph.vertices.associateWith { null }.toMutableMap()
+            while (S != graph.vertices) {
+                val v: T = delta
                     .filter { !S.contains(it.key) }
-                    .minBy { it.value }!!
+                    .minByOrNull { it: Map.Entry<T, Int> -> it.value }!!
                     .key
-            graph.edges.getValue(v).minus(S).forEach { neighbor ->
-                val newPath = delta.getValue(v) // + graph.weights.getValue(Pair(v, neighbor))
-                if (newPath < delta.getValue(neighbor)) {
-                    delta[neighbor] = newPath
-                    previous[neighbor] = v
+                graph.edges.getValue(v).minus(S).forEach { neighbor ->
+                    val newPath = delta.getValue(v) // + graph.weights.getValue(Pair(v, neighbor))
+                    if (newPath < delta.getValue(neighbor)) {
+                        delta[neighbor] = newPath
+                        previous[neighbor] = v
+                    }
+                }
+                S.add(v)
+            }
+            return previous.toMap()
+        }
+
+        fun floydWarshall(weights: Array<IntArray>, nVertices: Int) {
+            val dist = Array(nVertices) { DoubleArray(nVertices) { Double.POSITIVE_INFINITY } }
+            for (w in weights) dist[w[0] - 1][w[1] - 1] = w[2].toDouble()
+            val next = Array(nVertices) { IntArray(nVertices) }
+            for (i in 0 until next.size) {
+                for (j in 0 until next.size) {
+                    if (i != j) next[i][j] = j + 1
                 }
             }
-            S.add(v)
-        }
-        return previous.toMap()
-    }
-
-    fun floydWarshall(weights: Array<IntArray>, nVertices: Int) {
-        val dist = Array(nVertices) { DoubleArray(nVertices) { Double.POSITIVE_INFINITY } }
-        for (w in weights) dist[w[0] - 1][w[1] - 1] = w[2].toDouble()
-        val next = Array(nVertices) { IntArray(nVertices) }
-        for (i in 0 until next.size) {
-            for (j in 0 until next.size) {
-                if (i != j) next[i][j] = j + 1
-            }
-        }
-        for (k in 0 until nVertices) {
-            for (i in 0 until nVertices) {
-                for (j in 0 until nVertices) {
-                    if (dist[i][k] + dist[k][j] < dist[i][j]) {
-                        dist[i][j] = dist[i][k] + dist[k][j]
-                        next[i][j] = next[i][k]
+            for (k in 0 until nVertices) {
+                for (i in 0 until nVertices) {
+                    for (j in 0 until nVertices) {
+                        if (dist[i][k] + dist[k][j] < dist[i][j]) {
+                            dist[i][j] = dist[i][k] + dist[k][j]
+                            next[i][j] = next[i][k]
+                        }
                     }
                 }
             }
         }
-    }
 
-    fun <T> shortestPath(shortestPathTree: Map<T, T?>, start: T, end: T): List<T> {
-        fun pathTo(start: T, end: T): List<T> {
-            if (shortestPathTree[end] == null) return listOf(end)
-            return listOf(pathTo(start, shortestPathTree[end]!!), listOf(end)).flatten()
+        fun <T> shortestPath(shortestPathTree: Map<T, T?>, start: T, end: T): List<T> {
+            fun pathTo(start: T, end: T): List<T> {
+                if (shortestPathTree[end] == null) return listOf(end)
+                return listOf(pathTo(start, shortestPathTree[end]!!), listOf(end)).flatten()
+            }
+            return pathTo(start, end)
         }
-        return pathTo(start, end)
     }
 }
 

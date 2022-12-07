@@ -20,7 +20,7 @@ class WordsForNumbers {
 //        }
     }
 
-    fun solve(tokenizer: StreamTokenizer) : String {
+    fun solve(tokenizer: StreamTokenizer): String {
         tokenizer.eolIsSignificant(true)
         tokenizer.ordinaryChar(' '.toInt())
         tokenizer.ordinaryChar(','.toInt())
@@ -36,7 +36,7 @@ class WordsForNumbers {
                     lineStart = true
                 }
                 TT_WORD -> {
-                    printOrSave (lineStart, tokenizer.sval)
+                    printOrSave(lineStart, tokenizer.sval)
                     lineStart = false
                 }
                 TT_NUMBER -> {
@@ -44,14 +44,14 @@ class WordsForNumbers {
                     lineStart = false
                 }
                 else -> {
-                    printOrSave(lineStart, Character.toString(tokenizer.ttype.toChar()))
+                    printOrSave(lineStart, tokenizer.ttype.toChar().toString())
                     lineStart = false
                 }
             }
         }
     }
 
-    private fun mapNumbers(lineStart: Boolean, s: Double) : String {
+    private fun mapNumbers(lineStart: Boolean, s: Double): String {
         val num = number(s.toInt())
         if (lineStart) {
             return num.capitalize()

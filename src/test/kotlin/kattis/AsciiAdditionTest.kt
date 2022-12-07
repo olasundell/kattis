@@ -1,3 +1,5 @@
+package kattis
+
 import kattis.AsciiAddition
 import org.junit.jupiter.api.Test
 import util.AbstractKotlinTest

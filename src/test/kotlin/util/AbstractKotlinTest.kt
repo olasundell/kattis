@@ -19,6 +19,10 @@ abstract class AbstractKotlinTest {
         Assertions.assertEquals(expected, result)
     }
 
+    fun runAllTests(f: (Scanner) -> String) {
+        File(getDir()).walk().filter { it.endsWith(".in") }.forEach { runTest(it.name.replace(".in", "").toInt(), f) }
+    }
+
     fun <T> readFile(i: Int, javaClass: Class<T>): String {
         val prefix = prefix(javaClass)
         val s = "$prefix$i.in"
@@ -62,18 +66,13 @@ abstract class AbstractKotlinTest {
     }
 
     private fun buildScanner(s: String): Scanner {
-//        val dir = getDir()
-//        val s1 = DIR + dir + s.toLowerCase()
         val file = File(s)
 
         if (file.exists()) {
             return Scanner(file);
         } else {
-//            val s2 = dir + s.toLowerCase()
-//            val s2 = dir
-//            val s2 = s.toLowerCase()
             val resource: URL? = this::class.java.getResource(s)
-            val text = resource?.readText() ?: throw IllegalStateException(s)
+            val text = resource?.readText() ?: throw IllegalStateException("Could not find file $s")
             return Scanner(text)
         }
     }
@@ -81,7 +80,6 @@ abstract class AbstractKotlinTest {
     private fun getDir(): String =
             prefix(this.javaClass) +
                     this.javaClass.name.replace('.','/')
-//                    this.javaClass.name
             .replace("Test".toRegex(), "/")
             .toLowerCase()
 
@@ -89,41 +87,4 @@ abstract class AbstractKotlinTest {
         val resource: URL? = this::class.java.getResource(name)
         return resource?.readText() ?: throw IllegalStateException(name)
     }
-
 }
-//protected final static String DIR = "src/test/resources/";
-//protected abstract String getDir();
-//
-//protected void runTest(int i, Function<Scanner, String> function) throws IOException {
-//    String result = function.apply(buildScanner(i + ".in"));
-//    String expected = readFile(i + ".ans");
-//    Assert.assertEquals(expected, result);
-//}
-//
-//protected Scanner buildScanner(String s) throws FileNotFoundException {
-//    return new Scanner(new File(DIR + getSafeDir() + s));
-//}
-//
-//// TODO this could probably be slightly cleaner
-//protected String getSafeDir() {
-//    String dir = getDir();
-//
-//    if (!dir.endsWith("/")) {
-//        return dir + "/";
-//    } else {
-//        return dir;
-//    }
-//}
-//
-//protected String readFile(String fileName) throws IOException {
-//    List<String> solution = new ArrayList<>();
-//    String line;
-//
-//    final BufferedReader reader = new BufferedReader(new FileReader(DIR + getSafeDir() + fileName));
-//
-//    while ((line = reader.readLine()) != null) {
-//        solution.add(line);
-//    }
-//
-//    return String.join("\n", solution);
-//}

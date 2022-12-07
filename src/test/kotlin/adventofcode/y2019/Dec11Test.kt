@@ -20,8 +20,8 @@ class Dec11Test : AbstractKotlinTest() {
         val dec11 = Dec11(1L)
         runTest(2, dec11::solve)
         val arr = mutableListOf<String>()
-        val maxX = dec11.blocks.keys.maxBy { it.x }!!.x
-        val maxY = dec11.blocks.keys.maxBy(Dec13.Point::y)!!.y
+        val maxX = dec11.blocks.keys.maxByOrNull { it.x }!!.x
+        val maxY = dec11.blocks.keys.maxByOrNull { it.y }!!.y
 
         for (y in 0..maxY) {
             var str = ""

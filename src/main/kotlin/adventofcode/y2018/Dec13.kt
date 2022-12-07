@@ -49,7 +49,7 @@ class Dec13 {
         return st
     }
 
-    class CollisionException(val p: Point): Exception() {
+    class CollisionException(val p: Point) : Exception() {
         override fun toString(): String {
             return "(${p.x}, ${p.y})"
         }
@@ -221,7 +221,7 @@ class Dec13 {
         }
 
         fun onEdge(point: Dec13.Point): Boolean {
-            return  (point.x == upLeft.x || point.x == downRight.x) && upLeft.y.rangeTo(downRight.y).contains(point.y) ||
+            return (point.x == upLeft.x || point.x == downRight.x) && upLeft.y.rangeTo(downRight.y).contains(point.y) ||
                     (point.y == upLeft.y || point.y == downRight.y) && upLeft.x.rangeTo(downRight.x).contains(point.x)
         }
     }
@@ -278,13 +278,13 @@ class Dec13 {
         operator fun plus(carts: Iterable<Cart>): State = State(this.rectangles, this.intersections, this.carts.plus(carts))
 
         override fun toString(): String {
-            val maxX = rectangles.map { it.downRight.x }.max()!!
-            val minX = rectangles.map { it.upLeft.x }.min()!!
+            val maxX = rectangles.map { it.downRight.x }.maxOrNull()!!
+            val minX = rectangles.map { it.upLeft.x }.minOrNull()!!
 
-            val maxY = rectangles.map { it.downRight.y }.max()!!
-            val minY = rectangles.map { it.upLeft.y }.min()!!
+            val maxY = rectangles.map { it.downRight.y }.maxOrNull()!!
+            val minY = rectangles.map { it.upLeft.y }.minOrNull()!!
 
-            val rows = Array(maxY + 1)  { CharArray(maxX + 1) { '.' } }
+            val rows = Array(maxY + 1) { CharArray(maxX + 1) { '.' } }
 
             rectangles.forEach {
                 rows[it.upLeft.y][it.upLeft.x] = '/'
@@ -340,7 +340,7 @@ class Dec13 {
     enum class Direction(val x: Int, val y: Int) {
         UP(0, -1),
         DOWN(0, 1),
-        LEFT(-1 ,0),
+        LEFT(-1, 0),
         RIGHT(1, 0),
         NONE(0, 0);
 
